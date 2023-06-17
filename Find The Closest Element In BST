@@ -1,0 +1,43 @@
+/*
+Tree Node
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution
+{
+    public:
+    
+    void solve(Node* root,int K,int &ans){
+        if(root==NULL) return;
+        
+        if(root->data > K){
+           if(abs(root->data - K) < abs(ans-K)) ans= root->data;
+           solve(root->left,K,ans);
+        }
+        else if(root->data < K){
+            if(abs(root->data - K) < abs(ans-K)) ans= root->data;
+           solve(root->right,K,ans);
+        }
+        else{
+            ans= root->data;
+            return ;
+        }
+    }
+    
+    int minDiff(Node *root, int K)
+    {
+        //Your code here
+        int ans=0;
+        solve(root,K,ans);
+        return abs(ans-K);
+    }
+};
