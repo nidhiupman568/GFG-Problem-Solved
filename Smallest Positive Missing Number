@@ -1,0 +1,32 @@
+class Solution
+{
+    public:
+    //Function to find the smallest positive number missing from the array.
+    int missingNumber(int arr[], int n) 
+    { 
+        // Your code here
+        map<int,int> map;
+        for(int i=0;i<n;i++)
+        {
+            map[arr[i]]++;
+        }
+        
+        int pos = 1;
+        for(auto it: map)
+        {
+            if(it.first>0)
+            {
+                if(it.first == pos)
+                {
+                    pos++;
+                }
+                else
+                {
+                    break;
+                }
+                
+            }
+        }
+        return pos;
+    } 
+};
