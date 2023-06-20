@@ -1,0 +1,33 @@
+//User function Template for C++
+
+class Solution{
+public:
+   string LCP(string ar[], int n)
+   {
+       // code here
+       string ans = "";
+       
+       sort(ar,ar+n,[](string s,string t){
+          return s.size() < t.size();
+       });
+       
+      
+       
+       bool flag = true;
+       
+       for(int i = 0; i < ar[0].size(); i++){
+               char a = ar[0][i];
+           for(int j = 1; j < n; j++){
+               if(a != ar[j][i]){
+                   flag = false;
+               }
+           }
+           
+           if(flag) ans += a;
+           else break;
+       }
+       
+       if(ans == "") return "-1";
+       else return ans;
+   }
+};
