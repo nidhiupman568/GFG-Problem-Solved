@@ -1,0 +1,11 @@
+class Solution {
+  public:
+    int getAngle(int H , int M) {
+        // code here
+        float x1,x2,minute=M*6;
+     float hour=(H*60+M)*0.5;
+     x1=abs(hour-minute);
+     x2=abs(360-x1);
+     return int(min(x1,x2));
+    }
+};
