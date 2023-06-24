@@ -1,0 +1,36 @@
+This Solution Is in Java
+
+
+
+// User function Template for Javaclass Solution {
+class Solution {
+    int distance(int a, int b, int p, int q){
+        return (p - a) * (p - a) + (q - b) * (q - b);
+    }
+    int fourPointSquare(int points[][]){
+        for (int i = 0; i < 4; i++){
+            for (int j = i + 1; j < 4; j++){
+                if (points[i][0] == points[j][0] && points[i][1] == points[j][1]){
+                    return 0;
+                }
+            }
+        }
+        int d2 = distance(points[0][0], points[0][1], points[1][0], points[1][1]);
+        int d3 = distance(points[0][0], points[0][1], points[2][0], points[2][1]);
+        int d4 = distance(points[0][0], points[0][1], points[3][0], points[3][1]);
+        if(d2 == d3 && 2 * d2 == d4){
+            int d = distance(points[1][0], points[1][1], points[3][0],points[3][1]);
+            return ((d == distance(points[2][0], points[2][1], points[3][0],points[3][1]) && d == d2) ? 1: 0);
+        }
+
+        if(d3 == d4 && 2 * d3 == d2){
+            int d = distance(points[1][0], points[1][1], points[2][0],points[2][1]);
+            return ((d == distance(points[1][0], points[1][1], points[3][0],points[3][1]) && d == d3) ? 1: 0);
+        }
+        if(d2 == d4 && 2 * d2 == d3){
+            int d = distance(points[1][0], points[1][1], points[2][0],points[2][1]);
+            return ((d == distance(points[2][0], points[2][1], points[3][0],points[3][1]) && d == d2) ? 1: 0);
+        }
+        return 0;
+    }
+}   
