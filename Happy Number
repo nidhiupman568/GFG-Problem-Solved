@@ -1,0 +1,32 @@
+class Solution{
+public:
+        // code here
+        
+        int sum(int n)
+   {
+       int s= 0;
+       while(n>0)
+       {
+           int digit= n%10;
+           s= s+ (digit*digit);
+           n=n/10;
+       }
+       return s;
+   }
+   int isHappy(int N){
+       // code here
+       int temp=N;
+       
+       while(1)
+       {
+           if(temp==89)
+               return 0;
+           if(temp==1)
+               return 1;
+               
+           temp= sum(temp);
+       
+       }
+       
+    }
+};
