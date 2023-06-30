@@ -1,0 +1,39 @@
+
+class Solution {
+  public:
+    int distributeTicket(int N, int K) {
+        // code here
+        int h[N+1]={0};
+        for(int i=1; i<=N; i++)h[i]++;
+        int c=0,j=1,p=N, ans=0, i=1;
+        while(true){
+            if(c%2==0){
+                i=j;
+            }else{
+                i=p;
+            }
+            int q=K;
+            while(q){
+                if(h[i]==0)break;
+                h[i]=0;
+                ans=i;
+                if(c%2==0){
+                    i++;
+                }else{
+                    i--;
+                }
+                q--;
+            }
+             
+            if(c%2==0){
+                j=i;
+            }else{
+                p=i;
+            }
+            c++;
+            if(j>p)break;
+        }
+        
+        return ans;
+    }
+};
