@@ -1,0 +1,23 @@
+class Solution
+{
+    public:
+    // #define MAX 1000
+    vector<vector<int>> uniqueRow(int M[MAX][MAX],int row,int col)
+    {
+        //Your code here
+           unordered_set<string> sett;
+        vector<vector<int>> ans;
+        for(int i=0; i<row; i++){
+            string temp;
+            for(int j=0; j<col; j++){
+                temp.push_back((char)(M[i][j]+48));
+            }
+            if(sett.find(temp)==sett.end()){
+                vector<int> tmp(M[i], M[i]+col);
+                ans.push_back(tmp);
+                sett.insert(temp);
+            }
+        }
+        return ans;
+    }
+};
