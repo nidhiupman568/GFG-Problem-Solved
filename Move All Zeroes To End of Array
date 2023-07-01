@@ -1,0 +1,18 @@
+
+
+class Solution{
+public:
+    void pushZerosToEnd(int arr[], int n) {
+        // code here
+        int start=0,mid=0,end=n-1,temp;
+        while(mid<=end){
+            if(arr[mid]!=0){
+                temp=arr[start];
+                arr[start]=arr[mid];
+                arr[mid]=temp;
+                start++;
+            }
+            mid++;
+        }
+    }
+};
