@@ -1,0 +1,13 @@
+
+
+class Solution {
+  public:
+  int MOD = 1e9+7;
+  int inv = (MOD+1)/2;
+    int sumOfNaturals(int n) {
+        // code here
+        long long val = ( (long long)(((long long)  (n%MOD)*((n+1)%MOD))%MOD)*inv)%MOD;
+        int v = val;
+        return v;
+    }
+};
