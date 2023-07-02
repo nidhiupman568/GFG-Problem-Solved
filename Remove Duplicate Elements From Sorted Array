@@ -1,0 +1,19 @@
+
+
+
+class Solution{
+public:
+    int remove_duplicate(int arr[],int n){
+        // code here
+        int res=arr[0];
+        int k=1;
+        for(int i=1;i<n;i++){
+            if(res!=arr[i]){
+                arr[k]=arr[i];
+                k++;
+                res=arr[i];
+            }
+        }
+        return k;
+    }
+};
