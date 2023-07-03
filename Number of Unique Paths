@@ -1,0 +1,38 @@
+//User function template in C++
+class Solution
+{
+    public:
+    
+    int countpath(int startx , int starty , int endx , int endy , vector<vector<int>> &dp){
+        
+        if(startx == endx && starty == endy){
+            
+            return 1;
+    
+        }
+        
+        if(startx > endx || starty > endy) {
+            
+            return 0;
+            
+        }
+        
+        if(dp[startx][starty] != -1){
+            
+            return dp[startx][starty];
+        }
+        
+        int left = countpath(startx +1 , starty , endx , endy ,dp);
+        
+        int right = countpath(startx , starty + 1 ,endx , endy , dp);
+        
+        return dp[startx][starty] = left + right;
+        
+    }
+    int NumberOfPath(int a, int b)
+    {
+        
+       vector<vector<int>>dp(a , vector<int>(b , -1));
+       return countpath( 0 , 0 , a -1 , b - 1 ,dp);
+    }
+};
