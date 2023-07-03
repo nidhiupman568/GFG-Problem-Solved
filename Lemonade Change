@@ -1,0 +1,51 @@
+
+
+class Solution {
+  public:
+    bool lemonadeChange(int N, vector<int> &bills) {
+        int sum_5 = 0; //This will count the availability of 5 rupee coins
+        int sum_10 = 0; //This will count the availability of 10 rupee coins
+        
+        for(int i=0;i<N;i++)
+        {
+            if(bills[i] == 5)
+            {
+                sum_5 += 5;
+                continue;
+            }
+            else if(bills[i] == 10)
+            {
+                if(sum_5 > 0)
+                {
+                    sum_5 -= 5;
+                    sum_10 += 10;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                if(sum_5 > 0)
+                {
+                    if(sum_10 > 0)
+                    {
+                        sum_5 -= 5;
+                        sum_10 -= 10;
+                    }
+                    else if(sum_5 > 15)
+                    {
+                        sum_5 -= 15;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                    return false;
+                    
+            }
+        }
+        return true;
+    }
+};
