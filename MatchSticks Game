@@ -1,0 +1,17 @@
+class Solution {
+  public:
+    int matchGame(long long N) {
+        // code here
+        
+         {
+        long long mod = N%5;
+        if(N <= 4)
+            return N;
+        if(mod == 0 || N == 5)
+            return -1;
+        return mod;
+    }
+}
+
+};
+    
