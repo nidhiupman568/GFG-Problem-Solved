@@ -1,0 +1,21 @@
+//User function template for C++
+class Solution{
+public:	
+	vector<int> kLargest(int arr[], int n, int k) {
+	    // code here
+	    priority_queue<int> maxh;
+	    vector<int> ans;
+	    for(int i = 0; i < n; i++)
+	    {
+	        maxh.push(arr[i]);
+	    }
+	    while(k--)
+	    {
+	        int val = maxh.top();
+	        ans.push_back(val);
+	        maxh.pop();
+	    }
+	    return ans;
+	}
+
+};
