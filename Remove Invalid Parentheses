@@ -1,0 +1,61 @@
+class Solution {
+  public:
+    
+        // code here
+        vector<string> ans;
+   unordered_set<string> set;
+   
+   int isValid(string s) {
+       stack<int> st;
+       
+       for(int i = 0; i < s.size(); i++) {
+           if(s[i] == '(') {
+               st.push('(');
+           }else if(s[i] == ')') {
+               if(st.size() == 0) {
+                   st.push(')');
+               }else if(st.top() == ')') {
+                   st.push(')');
+               }else if(st.top() == '(') {
+                   st.pop();
+               }
+           }
+       }
+       return st.size();
+   }
+   
+   void solve(string s, int invalid) {
+       if(invalid < 0) return;
+       if(invalid == 0) {
+           int cnt = isValid(s);
+           if(cnt == 0) {
+               ans.push_back(s);
+           }
+           return;
+       }
+       
+       for(int i = 0; i < s.size(); i++) {
+           if(s[i] != ')' and s[i] != '(') {
+               continue;
+           }
+           
+           string l = s.substr(0, i);
+           string r = s.substr(i+1);
+           string a = l+r;
+           
+           if(set.find(a) == set.end()) {
+               set.insert(a);
+               solve(a, invalid - 1);
+           }
+       }
+   }
+   
+   vector<string> removeInvalidParentheses(string s) {
+       // code here
+       int invalidParen = isValid(s);
+       solve(s, invalidParen);
+       sort(ans.begin(), ans.end());
+       return ans;
+   
+    }
+};
