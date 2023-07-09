@@ -1,0 +1,46 @@
+
+class Solution{
+
+    public:
+
+    string convert(string s, int n) {      
+
+        if(n<=1) return s;
+
+        vector<string> res(n,"");
+
+        int p=0;
+
+        bool flag = true;
+
+        for(int i=0; i<s.size(); i++)
+
+        {
+
+            res[p].push_back(s[i]);
+
+            if(flag) p++;
+
+            else p--;
+
+            if(p==0) flag = true;
+
+            if(p==n-1) flag = false;
+
+        }
+
+        string ans ="";
+
+        for(string it : res) 
+
+        {
+
+            ans += it;
+
+        }
+
+        return(ans);
+
+    }
+
+};
