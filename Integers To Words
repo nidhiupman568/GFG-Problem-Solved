@@ -1,0 +1,40 @@
+//User function template for C++
+
+class Solution{   
+public:
+    map<int,string> mp;
+    
+    string find(int n){
+        if(n<=19) return mp[n];
+        int val= n%10;
+        int val1= n-val;
+        
+        if(val1>0) return mp[val1]+" "+ mp[val];
+        return mp[val];
+    }
+    string convertToWords(long n) {
+        // code here
+        bool flag=false;
+        mp[1]= "one";mp[2]="two";mp[3]="three";mp[4]="four";mp[5]="five";mp[6]="six";mp[7]="seven";mp[8]="eight";
+    mp[9]= "nine";mp[10]="ten";mp[20]="twenty";mp[30]="thirty";mp[40]="forty";mp[50]="fifty";mp[60]="sixty";
+    mp[70]="seventy";mp[80]="eighty";mp[90]="ninety";
+    mp[11]="eleven";mp[12]="twelve";mp[13]="thirteen";mp[14]="fourteen";mp[15]="fifteen";mp[16]="sixteen";
+    mp[17]="seventeen";mp[18]="eighteen";mp[19]="nineteen";
+        string ans="";
+        if(n/10000000 >0){ans+= find(n/10000000)+" crore ";flag=true;}
+        n=n%10000000;
+        if(n/100000 >0){ans+= find(n/100000)+" lakh ";flag=true;}
+        n=n%100000;
+        if(n/1000 >0){ans+= find(n/1000)+" thousand ";flag=true;}
+        n=n%1000;
+        if(n/100 >0){ans+= find(n/100)+" hundred ";flag=true;}
+        
+        n=n%100;
+        if(n>0){
+        if(flag) ans+="and ";
+        ans+= find(n);
+        }
+        
+        return ans;
+    }
+};
