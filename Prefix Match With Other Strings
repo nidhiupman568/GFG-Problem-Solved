@@ -1,0 +1,19 @@
+//User function Template for C++
+
+class Solution{   
+public:
+    int klengthpref(string arr[], int n, int k, string str){    
+          string s = str.substr(0,k);
+        if (str.length() < k) return 0;
+        int count = 0;
+        for(int i = 0;i < n;i++){
+            string t = arr[i].substr(0,k);
+            if (t == s){
+                count++;
+            }
+        }
+        return count;
+
+
+    }
+};
