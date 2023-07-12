@@ -1,0 +1,60 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+#define pb push_back
+#define pob pop_back
+#define mp make_pair
+#define pii pair<int,int>
+#define f first
+#define s second
+
+bool sortBySecond(const pair<int,int>&a,const pair<int,int>&b){
+    return a.first > b.first;
+}
+
+int main() {
+	int t;cin >> t;
+	while(t--){
+	    int n;cin >> n;
+	    map<int,vector<pii>> hm;
+	    for(int i=0;i<n;i++){
+	        int a,b,speed;cin >> a >> b >> speed;
+	        
+	        if(hm.count(speed) > 0){
+	            hm[speed].pb(make_pair(a,b));
+	        } else {
+	            hm[speed] = vector<pii>();
+	            hm[speed].pb(make_pair(a,b));
+	        }
+	    }
+	    // now find the more than 3 segments that have 
+	    // intersection points having same speed
+	    bool isFound = false;
+	    
+	    // using difference arrays technique to find the 
+	    // number of intersections of a particular point
+	    
+	        for(auto i : hm){
+	            vector<pii> list = i.s;
+	            if(!isFound){
+	                map<int,int> temp;
+	            for(pair p : list){
+	                temp[p.f]++;
+	                temp[p.s + 1]--;
+	            }
+	            int intersections = 0;
+	            for(auto p : temp){
+	                intersections += p.s;
+	                if(intersections > 2){
+	                    isFound = true;
+	                    break;
+	                }
+	            }
+	            }
+	        }
+	    
+	    if(!isFound) cout << "YES" << endl;
+	    else cout << "NO" <<endl;
+	}
+	return 0;
+}
