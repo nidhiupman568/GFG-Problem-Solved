@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool comp(pair<pair<int, int>, int>& a, pair<pair<int, int>, int>& b) {
+    return (a.first.second * b.first.first < a.first.first * b.first.second);
+}
+
+pair<pair<int, int>, int> dfs(int u, int p, vector<int> grp[], vector<int>& w) {
+    int z = 0;
+    int o = 0;
+    int ret = 0;
+    if (w[u] == 0)
+        z++;
+    else
+        o++;
+    vector<pair<pair<int, int>, int>> vec;
+    for (const auto& v:grp[u]) {
+        if (v==p)
+            continue;
+        auto r = dfs(v, u, grp, w);
+        vec.push_back(r);
+        z += r.first.first;
+        o += r.first.second;
+        ret += r.second;
+    }
+    if (vec.size()==0)
+        return {{z, o}, ret};
+    sort(vec.begin(), vec.end(), comp);
+    //vector<int> zs(vec.size(), 0);
+    //zs[vec.size()-1] = vec[vec.size()-1].first.first;
+    //for (int i=vec.size()-2;i>=0;i--) {
+    //    zs[i] = zs[i+1] + vec[i].first.first;
+    //}
+    int dup = z;
+    if (w[u] == 1) {
+        ret += z;
+    } else
+        dup--;
+    for (int i=0;i<vec.size();i++) {
+        dup -= vec[i].first.first;
+        ret += (dup*vec[i].first.second);
+    }
+    
+    
+    return {{z, o}, ret};
+}
+
+int main() {
+	// your code goes here
+	int t;
+	cin>>t;
+	while(t--) {
+	    int n;
+	    cin>>n;
+	    vector<int> grp[n];
+	    int x,y;
+	    vector<int> w(n,0);
+	    for (int i=0;i<n;i++) {
+	        cin>>x;
+	        w[i] = x;
+	    }
+	    for (int i=1;i<n;i++) {
+	        cin>>x>>y;
+	        x--;
+	        y--;
+	        grp[x].push_back(y);
+	        grp[y].push_back(x);
+	    }
+	    auto r = dfs(0, -1, grp, w);
+	    cout<<r.second<<"\n";
+	}
+	return 0;
+}
