@@ -1,0 +1,49 @@
+class Solution{
+  public:
+    /*You are required to complete below function */
+   string multiplyStrings(string s1, string s2) {
+       
+        //edge case if any string is exactly 0 then multiplication value will be 0
+        if(s1=="0" || s2=="0")
+            return "0";
+        
+        vector<int> num(s1.size()+s2.size(), 0);
+        
+        //handle cases when negative values are given
+        int n1 = 0;
+        int n2 = 0;
+        
+        if(s1[0] == '-')
+            n1 = 1;
+        if(s2[0] == '-')
+            n2 = 1;
+        if(s1[0] == '-' && s2[0] == '-')
+            n1 = n2 = 1;
+        
+        //multiplication
+        for(int i=s1.size()-1; i>=n1; i--)
+        {
+            for(int j=s2.size()-1; j>=n2; j--)
+            {
+                num[i+j+1] += (s1[i]-'0') * (s2[j]-'0');
+                num[i+j] += num[i+j+1]/10;
+                num[i+j+1] = num[i+j+1]%10;
+            }
+        }
+
+        //ignoring leading 0's       
+        int i=0;
+        while(i<num.size() && num[i]==0)
+            i++;
+        
+        //converting vector into string for returning answer    
+        string res = "";
+        //checking if any sring was negative then add negative sign '-' before the resulting string
+        if(n1 ^ n2)
+            res += '-';
+        while(i < num.size())
+            res.push_back(num[i++]+'0');
+            
+        return res;
+    }
+};
