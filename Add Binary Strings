@@ -1,0 +1,81 @@
+//User function template for C++
+class Solution{
+public:	
+	string addBinary(string A, string B)
+	{
+	    // your code here
+	     string ans="";
+
+     int carry=0;
+
+     int i=A.size()-1,j=B.size()-1;
+
+     while(i>=0 && j>=0){
+
+         int t=A[i]-'0'+B[j]-'0'+carry;
+
+         ans+=to_string(t%2);
+
+         carry=t/2;
+
+         i--;
+
+         j--;
+
+     }
+
+     while(i>=0){
+
+         int t=A[i]-'0'+carry;
+
+         ans+=to_string(t%2);
+
+         carry=t/2;
+
+         i--;
+
+     }
+
+     while(j>=0){
+
+         int t=B[j]-'0'+carry;
+
+         ans+=to_string(t%2);
+
+         carry=t/2;
+
+         j--;
+
+     }
+
+     if(carry)
+
+         ans+=to_string(carry);
+
+     reverse(ans.begin(),ans.end());
+
+     string res="";
+
+     int idx=-1;
+
+     for(int i=0;i<ans.length();i++){
+
+         if(ans[i]!='0'){
+
+             idx=i;
+
+             break;
+
+         }
+
+     }
+
+     for(int i=idx;i<ans.length();i++){
+
+         res+=ans[i];
+
+     }
+
+     return res;
+	}
+};
