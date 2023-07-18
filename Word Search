@@ -1,0 +1,44 @@
+
+
+
+class Solution {
+public:
+bool isvalid(int r,int c,int n,int m){
+    return r>=0 && r<n && c>=0 && c<m;
+}
+bool solve(vector<vector<char>>& board, string word,int n,int m,int x,int row,int col,int ind,vector<vector<int>> &visited){
+    if(ind>=x){
+        return true;
+    }
+    visited[row][col]=1;
+    int dr[4]={0,1,0,-1};
+    int dc[4]={1,0,-1,0};
+    for(int i=0;i<4;i++){
+        int nrow=row+dr[i];
+        int ncol=col+dc[i];
+        if(isvalid(nrow,ncol,n,m) && !visited[nrow][ncol] && board[nrow][ncol]==word[ind]){
+            if(solve(board,word,n,m,x,nrow,ncol,ind+1,visited)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+    bool isWordExist(vector<vector<char>>& board, string word) {
+        // Code here
+        int n=board.size();
+        int m=board[0].size();
+        int x=word.size();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(board[i][j]==word[0]){
+                    vector<vector<int>> visited(n,vector<int>(m,0));
+                    if(solve(board,word,n,m,x,i,j,1,visited)){
+                        return 1;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
