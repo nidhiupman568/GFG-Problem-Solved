@@ -1,0 +1,63 @@
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+    string findLargest(int N, int S){
+        // code here
+           string res = "";
+    
+        // Special case handling for S = 0
+        if (S == 0) {
+            if (N == 1) {
+                return "0";
+            } else {
+                return "-1";
+            }
+        }
+    
+        for (int i = 0; i < N; i++) {
+            // For every slot, find the largest possible digit
+            for (int d = 9; d >= 0; d--) {
+                if (d <= S) {
+                    // Place the digit in the result
+                    res += to_string(d);
+                    
+                    // Reduce the sum
+                    S -= d;
+                    
+                    break;  // break the inner loop and move to next slot
+                }
+            }
+        }
+    
+        // If there's still some sum left, it means it's not possible to form the number
+        if (S > 0) {
+            return "-1";
+        }
+        
+        return res;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int N, S;
+        cin>>N>>S;
+        
+        Solution ob;
+        cout<<ob.findLargest(N, S)<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
