@@ -1,0 +1,28 @@
+
+class Solution
+{
+    public:
+    vector<int>memo;
+    int dp(int arr[], int n)
+    {
+         if(n<=0)
+        {
+            return 0;
+        }
+        
+        if(memo[n]!=-1)
+        {
+            return memo[n];
+        }
+        
+        int canhavemax=dp(arr,n-2)+arr[n-1];
+        int canthavemax=dp(arr,n-1);
+        memo[n]=max(canhavemax,canthavemax);
+        return memo[n];
+    }
+    int FindMaxSum(int arr[], int n)
+    {
+       memo.resize(n+1,-1);
+       return dp(arr,n);
+    }
+};
