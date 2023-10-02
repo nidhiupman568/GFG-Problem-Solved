@@ -1,0 +1,21 @@
+
+
+class Solution{
+    public:
+    int m=1e9+7;
+    long long countWays(int n, int k){
+        // code hereif
+        if(n==1) return k;
+        long long  ps=0;
+        long long  pd=k;
+        long long  cs=0;
+        long long  cd=0;
+        for(int i=2;i<=n;i++){
+             cs=pd%m;
+             cd=((ps%m+pd%m)*(k-1))%m;
+            ps=cs%m;
+            pd=cd%m;
+        }
+        return (cs+cd)%m;
+    }
+};
