@@ -1,0 +1,14 @@
+//Back-end complete function Template for C++
+
+class Solution{
+    public:
+    vector<int> findLeastGreater(vector<int>& arr, int n) {
+         set<int> s;
+    for (int i = n-1; i >=0 ; --i) {
+        s.insert(arr[i]);
+        if (s.end() == s.upper_bound(arr[i])) arr[i] = -1;
+        else arr[i] = *(s.upper_bound(arr[i]));
+    }return arr;
+        
+    }
+};
