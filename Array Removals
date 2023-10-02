@@ -1,0 +1,21 @@
+//User function Template for C++
+
+class Solution{
+    public:
+    int removals(vector<int>& arr, int k){
+        //Code here
+                int n = arr.size();
+        sort(arr.begin(),arr.end());
+        int l=0;
+        int r=0;
+        int ans = 0;
+        while(r<n){
+            if(arr[r]-arr[l]<=k)
+                r++;
+            else
+                l++;
+            ans = max(ans,r-l);
+        }
+        return n-ans;
+    }
+};
