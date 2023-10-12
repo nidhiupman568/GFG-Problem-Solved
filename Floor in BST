@@ -1,0 +1,23 @@
+// Function to search a node in BST.
+class Solution{
+
+public:
+    void preorder(Node* root,int x,int &ans)
+    {
+        if(!root) return;
+        if(root->data<=x)
+        {
+            ans=max(ans,root->data);
+        }
+        preorder(root->left,x,ans);
+        preorder(root->right,x,ans);
+        
+    }
+    int floor(Node* root, int x) {
+        // Code here
+        int ans=-1;
+        preorder(root,x,ans);
+        return ans;
+    }
+
+};
