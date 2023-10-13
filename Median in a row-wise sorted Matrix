@@ -1,0 +1,38 @@
+//User function template for C++
+class Solution {
+public:
+    int median(vector<vector<int>>& matrix, int R, int C) {
+        // Initialize the minimum and maximum values for the binary search range.
+        int min_val = INT_MAX;
+        int max_val = INT_MIN;
+
+        // Find the minimum and maximum values in the matrix.
+        for (int i = 0; i < R; ++i) {
+            min_val = min(min_val, matrix[i][0]);       // Minimum value in the first column
+            max_val = max(max_val, matrix[i][C - 1]);   // Maximum value in the last column
+        }
+
+        // Binary search to find the median.
+        while (min_val < max_val) {
+            int mid_val = min_val + (max_val - min_val) / 2;
+            int count = 0; // Count of elements less than or equal to mid_val
+
+            // Count the number of elements less than or equal to mid_val in each row.
+            for (int i = 0; i < R; ++i) {
+                count += upper_bound(matrix[i].begin(), matrix[i].end(), mid_val) - matrix[i].begin();
+            }
+
+            // If count is less than or equal to (R * C) / 2, update the minimum value.
+            if (count <= (R * C) / 2) {
+                min_val = mid_val + 1;
+            } 
+            // If count is greater than (R * C) / 2, update the maximum value.
+            else {
+                max_val = mid_val;
+            }
+        }
+
+        // At this point, min_val will be the median.
+        return min_val;
+    }
+};
