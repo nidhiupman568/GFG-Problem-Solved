@@ -1,0 +1,85 @@
+// design the class in the most optimal way
+
+class LRUCache {
+private:
+    // Inner class for the doubly linked list nodes.
+    class Node {
+    public:
+        int key;
+        int value;
+        Node* prev = NULL;
+        Node* next = NULL;
+        
+        Node(int key, int value) {
+            this->key = key;
+            this->value = value;
+        }
+    };
+
+    // Head and tail nodes of the doubly linked list.
+    Node* head = new Node(-1, -1); // Dummy head node.
+    Node* tail = new Node(-1, -1); // Dummy tail node.
+
+    int capacity;
+    unordered_map<int, Node*> map; // Map to store the key-node mapping.
+
+public:
+    // Constructor for initializing the LRUCache with the given capacity.
+    LRUCache(int cap) {
+        capacity = cap;
+        // Initialize the linked list with the dummy head and tail nodes.
+        head->next = tail;
+        tail->prev = head;
+    }
+    
+    // Function to insert a node after the head of the doubly linked list.
+    void insert(Node* tempNode) {
+        tempNode->next = head->next;
+        head->next->prev = tempNode;
+        head->next = tempNode;
+        tempNode->prev = head;
+        
+        map[tempNode->key] = tempNode; // Update the key-node mapping in the map.
+    }
+    
+    // Function to remove a node from the doubly linked list.
+    void remove(Node* tempNode) {
+        tempNode->prev->next = tempNode->next;
+        tempNode->next->prev = tempNode->prev;
+    }
+    
+    // Function to get the value corresponding to the key from the LRUCache.
+    int GET(int key) {
+        // Check if the key is present in the LRUCache.
+        if (map.find(key) == map.end())
+            return -1; // Key not found, return -1.
+        
+        Node* current = map[key]; // Get the node corresponding to the key.
+        remove(current); // Remove the node from its current position in the list.
+        insert(current); // Insert the node after the head to make it the most recently used node.
+        return current->value; // Return the value associated with the key.
+    }
+    
+    // Function to store a key-value pair in the LRUCache.
+    void SET(int key, int value) {
+        // Check if the key already exists in the LRUCache.
+        if (map.find(key) != map.end()) {
+            Node* current = map[key]; // Get the existing node corresponding to the key.
+            current->value = value; // Update the value of the existing node.
+            remove(current); // Remove the node from its current position in the list.
+            insert(current); // Insert the node after the head to make it the most recently used node.
+        } else if (map.size() == capacity) {
+            Node* current = tail->prev; // Get the least recently used node from the tail of the list.
+            remove(current); // Remove the node from the tail to make space for the new node.
+            map.erase(current->key); // Remove the mapping of the removed node from the map.
+            delete current; // Deallocate memory for the removed node.
+            
+            Node* newNode = new Node(key, value); // Create a new node with the given key-value pair.
+            insert(newNode); // Insert the new node after the head to make it the most recently used node.
+        } else {
+            Node* newNode = new Node(key, value); // Create a new node with the given key-value pair.
+            insert(newNode); // Insert the new node after the head to make it the most recently used node.
+        }
+    }
+
+};
