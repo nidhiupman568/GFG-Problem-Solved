@@ -1,0 +1,95 @@
+/* Structure of the linked list node is as
+struct Node 
+{
+    int data;
+    struct Node* next;
+    Node(int x) { data = x;  next = NULL; }
+};
+*/
+
+
+class Solution{
+    
+  public:
+    Node* findmid(Node* head){
+        Node* fast = head->next;
+        Node* slow = head;
+        
+        while(fast != NULL && fast->next != NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+            
+        }
+        
+        return slow;
+    }
+    
+    void insert_tail(Node* temp, Node* &tail){
+        Node* newnode = new Node(temp->data);
+        tail->next = newnode;
+        tail = newnode;
+    }
+    
+    Node* merge(Node* left, Node* right){
+        if(left == NULL){
+            return right;
+        }
+        else if(right == NULL){
+            return left;
+        }
+        
+        Node* anshead = new Node(-1);
+        Node* anstail = anshead;
+        
+        while(left != NULL && right != NULL){
+            if(left->data < right->data){
+                insert_tail(left,anstail);
+                left = left->next;
+            }
+            else{
+                insert_tail(right,anstail);
+                right = right->next;
+            }
+        }
+        
+        while(left != NULL){
+            insert_tail(left,anstail);
+            left = left->next;
+        }
+        while(right != NULL){
+            insert_tail(right,anstail);
+            right = right->next;
+        }
+        
+        Node* temp = anshead;
+        anshead = anshead->next;
+        delete temp;
+        
+        return anshead;
+    }
+  
+    //Function to sort the given linked list using Merge Sort.
+    Node* mergeSort(Node* head) {
+        // Base case
+        if(head == NULL || head->next == NULL){
+            return head;
+        }
+        
+        // Mid Find & break 2 diff linked list
+        Node* mid = findmid(head);
+        
+        Node* left = head;
+        Node* right = mid->next;
+        mid->next = NULL;
+        
+        // Sorting every part
+        left = mergeSort(left);
+        right = mergeSort(right);
+        
+        // Merge 2 sorted Linked lIst
+        Node* result = merge(left,right);
+        return result;
+        
+    }
+};
+
