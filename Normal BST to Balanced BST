@@ -1,0 +1,37 @@
+/*Structure of the Node of the BST is as
+struct Node
+{
+	int data;
+	Node* left, *right;
+};
+*/
+
+class Solution{
+    
+    public:
+    // Your are required to complete this function
+    // function should return root of the modified BST
+    vector<Node*> nums;
+    void inorder(Node* root){
+        if(!root) return;
+        
+        inorder(root->left);
+        nums.push_back(root);
+        inorder(root->right);
+    }
+    Node* buildBST(int l, int r, vector<Node*>& nums){
+        if(l>r) return NULL;
+        int m = (l+r)/2;
+        
+        nums[m]->left = buildBST(l, m-1, nums);
+        nums[m]->right = buildBST(m+1, r, nums);
+        
+        return nums[m];
+    }
+    Node* buildBalancedTree(Node* root)
+    {
+        // Code here
+        inorder(root);
+        return buildBST(0, nums.size()-1, nums);
+    }
+};
