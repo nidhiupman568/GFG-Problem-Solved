@@ -1,0 +1,23 @@
+class Solution
+{
+  public:
+        vector <int> rotate (int n, int d)
+        {
+            //code here.
+             d = d%16; // make sure d does not get out of bound i.e greater than 16 as number's are  stored in 16-bit .
+            vector<int> res;
+            unsigned short x = n; //convert 32-bit to 16-bit.
+            //calculate Left Rotate;
+            unsigned short temp = x<<d; 
+            res.push_back( temp + ((x-(temp>>d))>>(16-d)));
+            
+            //calculate Right Rotate;
+            
+            temp = x>>d;
+            res.push_back(temp+( (x-(temp<<d))<<(16-d) ))  ;
+            
+            
+            
+            return res;
+        }
+};
