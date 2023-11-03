@@ -1,0 +1,62 @@
+class Solution {
+
+   public:
+    // find pivot index
+   int pivotIndex(int arr[],int l,int h){
+       int s=l;
+       int e=h;
+       int mid=s+(e-s)/2;
+
+       while(s<=e){
+        if(s==e)
+        return s;
+        if(mid+1<=h && arr[mid]>arr[mid+1]){
+            return mid;
+        }
+        else if(mid-1>=0 && arr[mid-1]>arr[mid]){
+            return mid-1;
+        }
+        else if(arr[s]>arr[mid]){
+            e=mid-1;
+        }
+        else 
+        s=mid+1;
+        mid=s+(e-s)/2;
+       }
+       return -1;  
+   }
+    
+    
+    //binary search 
+   int binarySearch(int nums[],int s,int e,int target){
+       
+      int mid=s+(e-s)/2;
+
+      while(s<=e){
+     if(nums[mid]==target){
+         return mid;
+     }
+     else if(nums[mid]<target ){
+        s=mid+1;
+     }
+     else
+     e=mid-1;
+     mid=s+(e-s)/2;
+      }
+      return -1;
+   }
+    
+    int search(int A[],int l,int h,int target){
+        int s=l;
+        int ans=-1;
+        int e=h;
+    int pivot=pivotIndex(A,l,h);
+    if(A[pivot]>=target && target >= A[s]){
+        ans=binarySearch(A,s,pivot,target);
+    }
+    else
+     ans=binarySearch(A,pivot+1,e,target);
+    return ans;
+     }
+};
+
