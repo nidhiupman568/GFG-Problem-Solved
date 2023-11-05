@@ -1,0 +1,33 @@
+class Solution {
+  public:
+  
+  void fun(set<string>&st,string sg,int i,string S){
+      if(i>=S.size()){
+          st.insert(sg);
+          return;
+      }
+      
+      sg.push_back(S[i]);
+      fun(st,sg,i+1,S);
+      sg.pop_back();
+      fun(st,sg,i+1,S);
+      
+  }
+    set<string> allPossibleSubsequences(string S) {
+        set<string>st;
+        set<string>ans;
+        string sg;
+        fun(st,sg,0,S);
+        set<char>s{'a','i','e','o','u'};
+       for(auto it:st){
+           if(s.count(it[0])){
+               int t=it.size()-1;
+               if(!s.count(it[t])){
+                   ans.insert(it);
+                   
+               }
+               
+           }
+       }
+       return ans;
+    }
