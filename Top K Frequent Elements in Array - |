@@ -1,0 +1,32 @@
+  map<int, int> numCount;
+        
+        for(const auto &val: nums)
+        {
+            if (numCount.find(val) == numCount.end())
+            {
+                numCount[val] = 1;
+            }
+            else
+            {
+                numCount[val]++;
+            }
+        }
+        
+
+        priority_queue<pair<int, int>> pQueue;
+        
+        for(const auto &val: numCount)
+        {
+            pQueue.push(pair<int, int>(val.second, val.first));
+        }
+
+        vector<int> result;
+
+        for (int i = 1; i <=k; i++)
+        {
+            auto topVal = pQueue.top();
+            pQueue.pop();
+            result.push_back(topVal.second);
+        }
+
+        return result;
