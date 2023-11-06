@@ -1,0 +1,33 @@
+class Solution{
+public:
+    vector<int> matrixSum(int n, int m, vector<vector<int>> mat, int qq, vector<int> queries[])
+    {
+        // code here
+        vector<int> ans;
+        
+        for(int k=0;k<qq;k++){
+                vector<int> q = queries[k];
+                int sum=0;
+             
+                    
+                for(int i=-q[0];i<=q[0];i++){
+                    for(int j=-q[0];j<=q[0];j++){
+                        if(abs(i)==q[0]||abs(j)==q[0]) 
+                           {
+
+                        int ni = q[1]+i;
+                        int nj = q[2]+j;
+                        
+                        if(ni>=0&&nj>=0&&ni<n&&nj<m)
+                          sum+=mat[ni][nj];}
+                    }
+                }
+                
+                ans.push_back(sum);
+                    
+                
+            
+        }
+        return ans;
+    }
+};
