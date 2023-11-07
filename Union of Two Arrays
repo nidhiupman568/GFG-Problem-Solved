@@ -1,0 +1,17 @@
+class Solution{
+    public:
+    //Function to return the count of number of elements in union of two arrays.
+    int doUnion(int a[], int n, int b[], int m)  {
+        unordered_set<int> result;
+        //Push all the elements of first array into the set
+        for(int i = 0; i<n; i++){
+            result.emplace(a[i]);
+        }
+        //Push all the elements of the second array into the set
+        for(int i = 0; i<m; i++){
+            result.emplace(b[i]);
+        }
+        //return the size of the set, that will be the number of unique elements
+        return result.size();
+    }
+};
