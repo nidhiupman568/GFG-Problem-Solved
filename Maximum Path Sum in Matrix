@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int t[501][501];
+
+    int solve(int i, int j, int n, vector<vector<int>> &M){
+        
+        if(i >= n || j >= n){
+            return 0;
+        }
+        
+        if(i < 0 || j < 0){
+            return 0;
+        }
+        
+        if(t[i][j] != -1){
+            return t[i][j];
+        }
+        
+        int a,b,c;
+        a = M[i][j] + solve(i+1,j,n,M);
+        b = M[i][j] + solve(i+1,j-1,n,M);
+        c = M[i][j] + solve(i+1,j+1,n,M);
+        int ans;
+        ans = max({a,b,c});
+        return t[i][j] = ans;
+    }
+    
+    int maximumPath(int N, vector<vector<int>> Matrix)
+    {
+        memset(t,-1,sizeof(t));
+        
+        int ans=INT_MIN;
+        
+        for(int i = 0 ; i < N ; i++){
+            ans = max(ans,solve(0,i,N,Matrix));
+        }
+         return ans;
+    }
+};
