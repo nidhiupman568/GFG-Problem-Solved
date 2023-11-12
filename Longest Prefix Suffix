@@ -1,0 +1,31 @@
+class Solution{
+  public:
+int lps(string s) {
+    // Your code goes here
+     int n = s.size();
+        vector<int>prefix(n, 0);
+        int i = 0, j = 1;
+        while(j < n){
+            if(s[i] == s[j]){
+                prefix[j] = i + 1;
+                i++;
+                j++;
+            }
+            else{
+                if(i == 0){
+                    j++;
+                }
+                else{
+                    i = prefix[i - 1];
+                }
+            }
+ 
+ 
+        }
+ 
+    string a= s.substr(0, i);
+    
+    return a.size();
+  
+}
+};
