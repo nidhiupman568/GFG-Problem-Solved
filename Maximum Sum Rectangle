@@ -1,0 +1,72 @@
+class Solution {
+  public:
+    int kadane(vector<int>&arr,int &cs,int &ce)
+    {
+        int s = 0 , e = 0 , len = 0 , start = 0 , end = 0;
+        int res = arr[0] , sum = arr[0];
+        for(int i=1;i<arr.size();i++)
+        {
+            if(sum + arr[i] > arr[i])
+            {
+                sum = sum+arr[i];
+            }
+            else
+            {
+                s = i;
+                sum = arr[i];
+            }
+            
+            if(sum>res)
+            {
+                res = sum ; 
+                e = i;
+                if(e-s+1 > len)
+                {
+                    len = e-s+1;
+                    start = s;
+                    end = e;
+                }
+            }
+        }
+        //cout<<start<<" "<<end<<" "<<len<<endl;
+        //cout<<res<<endl;
+        cs = start , ce = end;
+        return res;
+    }
+    int maximumSumRectangle(int R, int C, vector<vector<int>> M) {
+        // code here
+        int left = 0 , right = 0 , up = 0 , down = 0;
+        int sum = INT_MIN;
+        for(int r=0;r<R;r++)
+        {
+            vector<int>temp(C,0);
+            for(int i=r;i<R;i++)
+            {
+                for(int j=0;j<C;j++)
+                {
+                    temp[j] += M[i][j];
+                }
+                int cs = -1 , ce = -1;
+                int x = kadane(temp,cs,ce);
+                sum = max(x,sum);
+                // if(x>sum)
+                // {
+                //     up = r;
+                //     down = i;
+                //     left = cs;
+                //     right = ce;
+                //     sum = x;
+                // }
+                
+            }
+        }
+        
+        // for(int i=up ; i<= down ; i++)
+        // {
+        //     for(int j=left;j<=right;j++)
+        //         cout<<M[i][j]<<" ";
+        //     cout<<endl;
+        // }
+        return sum;
+    }
+};
