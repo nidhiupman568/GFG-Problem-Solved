@@ -1,0 +1,51 @@
+class Solution
+{
+public:
+    // Helper function to perform in-order traversal and connect nodes
+    void convertToCircularDLL(Node *root, Node *&head, Node *&tail)
+    {
+        if (!root)
+            return;
+
+        // Recursive in-order traversal
+        convertToCircularDLL(root->left, head, tail);
+
+        // Connect the current node to the circular doubly linked list
+        if (!head)
+        {
+            // If head is null, set head and tail to the current node
+            head = tail = root;
+        }
+        else
+        {
+            // Connect the current node to the right of the tail
+            tail->right = root;
+            // Connect the tail to the left of the current node
+            root->left = tail;
+            // Update the tail to the current node
+            tail = root;
+        }
+
+        // Recursive in-order traversal
+        convertToCircularDLL(root->right, head, tail);
+    }
+
+    // Function to convert binary tree into circular doubly linked list.
+    Node *bTreeToCList(Node *root)
+    {
+        if (!root)
+            return nullptr;
+
+        // Initialize head and tail pointers
+        Node *head = nullptr, *tail = nullptr;
+
+        // Perform in-order traversal and connect nodes
+        convertToCircularDLL(root, head, tail);
+
+        // Connect the head and tail of the circular doubly linked list
+        head->left = tail;
+        tail->right = head;
+
+        return head;
+    }
+};
