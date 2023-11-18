@@ -1,0 +1,31 @@
+class Solution
+{
+  public:
+    string secFrequent (string arr[], int n)
+    {
+      map<string,int> m;
+      int maxi=INT_MIN;
+      int smaxi=INT_MIN;
+       string s , r;
+       
+      for(int i=0;i<n;i++)
+          m[arr[i]]++;
+      
+      for(auto it = m.begin() ; it!=m.end() ; it++){
+        
+          if(it->second > maxi){
+              smaxi = maxi;
+              s = r;
+              maxi = it->second;
+              r=it->first;
+          }
+          
+          if(it->second < maxi && it->second > smaxi){
+              smaxi = it->second;
+              s=it->first;
+          }
+      }
+     
+      return s;
+    }
+};
