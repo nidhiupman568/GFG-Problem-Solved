@@ -1,0 +1,53 @@
+//User function template for C++
+
+/*
+struct Node 
+{
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+class Solution{
+  public:
+    int mod = (int)1e9+7;
+    
+    void solve(Node* root, int k, unordered_map<int, int> &sumCount, int sum, int &ans) {
+        if (root == NULL) {
+            return;
+        }
+        
+        sum += root->data; // Adding the Valve of Current Node to the Path Sum
+        
+        ans += sumCount[sum - k] % mod; // Adding the No. of Remaining Sum Paths to the Answer
+        
+        sumCount[sum] += 1 % mod; // Storing the Current Sum to the 'sumCount' map
+        
+        if (sum == k) // Checking if Current Sum == k
+        {
+            ans += 1 % mod;
+        }
+        
+        // Recursively Calling For Left & Right Subtrees 
+        solve(root->left, k, sumCount, sum, ans);
+        solve(root->right, k, sumCount, sum, ans);
+        
+        // Decrement the Count Of Current Sum from the map while returning 
+        sumCount[sum] -= 1;
+    }
+    
+    int sumK(Node *root,int k)
+    {
+        int ans = 0;
+        unordered_map<int, int> sumCount;
+        
+        solve(root, k, sumCount, 0, ans);
+        
+        return ans;
+    }
+};
