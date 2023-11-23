@@ -1,0 +1,26 @@
+class Solution
+{   
+    public:
+   
+    void rotateby90(vector<vector<int> >& matrix, int n) 
+    { 
+        int a[n][n];
+   
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+               a[i][j]=matrix[j][n-1-i];
+            }
+        }
+         
+       
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                matrix[i][j]=a[i][j];
+            }
+        }
+    } 
+};
