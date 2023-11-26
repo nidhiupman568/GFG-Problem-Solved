@@ -1,0 +1,18 @@
+  vector<int> ans;
+        int global = N;
+        bool flag = 1;
+        while(N<=global)
+        {
+       if(N>0 && flag)
+       {
+           ans.push_back(N);
+           N= N-5;
+       }
+       else
+       {
+           flag=0;
+           ans.push_back(N);
+           N= N+5;
+       }
+        }
+       return ans;
