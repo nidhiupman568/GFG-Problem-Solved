@@ -1,0 +1,12 @@
+int countRev (string s)
+{
+    // your code here
+    
+     if(s.size()&1)return -1;
+    int ans=0,o=0,c=0;
+    for(char ch:s){
+        ch=='{'?o++:c++;
+        if(c>o)ans++,o++,c--;
+    }
+    return ans+(o-c)/2;
+}
