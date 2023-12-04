@@ -1,0 +1,19 @@
+void SortedStack :: sort()
+{
+   //Your code here
+    stack<int>temp;
+   while(!s.empty()){
+       int tmp=s.top();
+       s.pop();
+       
+       while(!temp.empty() && temp.top()<tmp){
+           s.push(temp.top());
+           temp.pop();
+       }
+        temp.push(tmp);
+   }
+   while(!temp.empty()){
+       s.push(temp.top());
+       temp.pop();
+   }
+}
