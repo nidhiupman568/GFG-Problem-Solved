@@ -1,0 +1,24 @@
+class Solution{
+public:
+ 
+int search(string text, string pat)
+{
+    // Your code goes here
+    string temp="";
+    int n=pat.size();
+    for(int i=0;i<n;i++){
+        temp+=text[i];
+    }
+    if(temp==pat){
+        return true;
+    }
+    for(int i=n;i<text.size();i++){
+        temp+=text[i];
+        temp.erase(0,1);
+        if(temp==pat){
+        return true;
+    }
+    }
+    return false;
+}
+};
