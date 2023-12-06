@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    int getCount(int a, int x){
+        int count = 0;
+        while (a>0){
+            if (a%10 == x) count++;
+            a /= 10;
+        }
+        return count;
+    }
+  
+    int countX(int L, int R, int X) {
+        // code here
+        int count = 0;
+        for(int i=L+1; i<R; i++){
+            count += getCount(i,X);
+        }
+        return count;
+    }
+};
