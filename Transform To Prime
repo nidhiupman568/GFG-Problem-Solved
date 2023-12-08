@@ -1,0 +1,33 @@
+class Solution
+{
+    public:
+    int minNumber(int arr[],int N)
+    {
+         int sum=0;
+      
+       for(int i=0;i<N;i++){
+           sum+=arr[i];
+       }
+  
+      vector<int>dp(sum+1001,true);
+      dp[0]=false;
+      dp[1]=false;
+ 
+      for(int i=2;i*i<=(sum+1000);i++){
+           
+           if(dp[i]==true){
+                  for(int j=i*i;j<=(sum+1000);j+=i){
+              dp[j]=false;
+          }
+           }
+       
+      }
+      for(int i=sum;i<=sum+1000;i++){
+          if(dp[i]==true){
+              return i-sum;
+          }
+      }
+       return 0;
+        
+    }
+};
