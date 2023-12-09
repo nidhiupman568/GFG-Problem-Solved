@@ -1,0 +1,15 @@
+class Solution{
+    public:
+    bool subArrayExists(int arr[], int n)
+    {
+        unordered_set <int> s{0};
+        int sum=0;
+        for(int i=0;i<n;i++)
+        {
+            sum+=arr[i];
+            if(s.find(sum)==s.end()) s.insert(sum);
+            else return 1;
+        }
+        return 0;
+    }
+};
