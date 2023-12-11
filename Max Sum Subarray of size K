@@ -1,0 +1,20 @@
+class Solution{   
+public:
+    long maximumSumSubarray(int K, vector<int> &arr , int N){        // code here 
+        long long i=0, sum=0; 
+        while(i<K){
+            sum += arr[i];
+            i++;
+        }
+        
+        long long j=0;
+        long long newSum=sum;
+        while(i<N){
+            newSum=newSum+arr[i]-arr[j];
+            if(newSum > sum) sum = newSum;
+            j++;
+            i++;
+        }
+        return sum;
+    }
+};
