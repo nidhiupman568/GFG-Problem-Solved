@@ -1,0 +1,14 @@
+class Solution{
+public:
+    int solver(int ind,int cnt,int n,vector<vector<int>>&dp){
+        if(ind>=n)return 1;
+        if(dp[ind][cnt]!=-1)return dp[ind][cnt];
+        return dp[ind][cnt]=(solver(ind+1,0,n,dp)+(solver(ind+1,1,n,dp)*(cnt==0)))%1000000007;
+    }
+    // #define ll long long
+    ll countStrings(int n) {
+        // code here
+        vector<vector<int>>dp(n,vector<int>(2,-1));
+        return solver(0,0,n,dp)%1000000007;
+    }
+};
