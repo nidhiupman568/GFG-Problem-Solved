@@ -1,0 +1,107 @@
+class Solution{
+    public:
+    const int mod = 1e9+7;
+    
+    // METHOD 1: backtracking TC = O(k^n), SC = O(n)
+    bool isPossible(vector<int> &fence, int c, int indx) {
+        // if two consecutive colors are already present return false else true
+        if (indx-2 >= 0) {
+            return c != fence[indx-1] || c != fence[indx-2];
+        }
+        return true;
+    }
+    void backtracking(vector<int> &fence, int k, int i, long long &ways) {
+        // if we successfully coloured all fences
+        if (i == fence.size()) {
+            ways++;
+            ways %= mod;
+            return;
+        }
+        
+        for (int c = 1; c <= k; c++) {
+            if (isPossible(fence, c, i)) {
+                fence[i] = c;
+                backtracking(fence, k, i+1, ways);
+                // backtrack
+                fence[i] = 0;
+            }
+        }
+    }
+    
+    // METHOD 2: recursion TC = O(2^n), SC = O(n)
+    long long rec(int n, int k) {
+        // base cases
+        if (n == 1) return k; // to color only 1 fence we have k ways
+        // [ways to do same color + ways to do different color]
+        if (n == 2) return (k + k*(k-1))%mod; // to color 2 fence we have k + k*(k-1)
+        
+        // ans = ways to color n-2 fences with same color + ways to color n-1 fences with different color
+        // ans = ways to color n-2 fences into k-1 + ways to color n-1 fences * k-1
+        long long ans = (((rec(n-2, k) + rec(n-1, k))%mod)*(k-1))%mod;
+        
+        return ans;
+    }
+    
+    // METHOD 3: memoization TC = O(n), SC = O(n+n) for recursive stack and dp vector
+    long long memo(int n, int k, vector<long long> &dp) {
+        if (n == 1) return k;
+        if (n == 2) return (k+k*(k-1))%mod;
+        
+        if (dp[n] != -1) return dp[n];
+
+        long long ans = (((memo(n-2, k, dp) + memo(n-1, k, dp))%mod)*(k-1))%mod;
+        
+        return dp[n] = ans;
+    }
+    
+    // METHOD 4: tabulation TC = O(n), SC = (n)
+    long long tab(int n, int k) {
+        vector<pair<long long, long long>> dp(n);
+        dp[0].first = k;
+        dp[0].second = k;
+        
+        for (int i=1; i<n; i++) {
+            dp[i].first = (dp[i-1].second*(k-1))%mod; // same colored
+            dp[i].second = (dp[i-1].first + (dp[i-1].second*(k-1))%mod)%mod; // diff colored
+        }
+        return dp[n-1].second;
+    }
+    
+    // METHOD 5: space optimized DP TC = O(n), SC = O(1)
+    long long op_dp(int n, int k) {
+        pair<long long, long long> dp;
+        dp.first = k;
+        dp.second = k;
+        
+        for (int i=1; i<n; i++) {
+            pair<long long, long long> temp;
+            temp.first = (dp.second*(k-1))%mod; // same colored
+            temp.second = (dp.first + (dp.second*(k-1))%mod)%mod; // diff colored
+            dp = temp;
+        }
+        return dp.second;
+    }
+    
+    
+    // 5 methods to solve this question
+    long long countWays(int n, int k){
+        // METHOD 1
+        // vector<int> fence(n, 0);
+        // long long ways = 0;
+        // backtracking(fence, k, 0, ways);
+        // return ways;
+        
+        // METHOD 2
+        // return rec(n, k);
+        
+        // METHOD 3
+        // vector<long long> dp(n+1, -1);
+        // return memo(n, k, dp);
+        
+        // METHOD 4
+        // return tab(n, k);
+        
+        // METHOD 5
+        return op_dp(n, k);
+    }
+};
