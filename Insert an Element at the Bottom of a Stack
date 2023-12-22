@@ -1,0 +1,19 @@
+class Solution{
+public:
+    stack<int> insertAtBottom(stack<int> St,int X){
+        //base case
+        if(St.empty()){
+            St.push(X);
+            return St;
+        }
+        //1 case solve krlo
+        int temp = St.top();
+        St.pop();
+        //recursive call
+        St = insertAtBottom(St, X);
+        //BT
+        St.push(temp);
+        return St;
+    }
+};
+
