@@ -1,0 +1,38 @@
+class Solution
+{
+    public:
+    string rearrangeString(string str){
+        unordered_map<char, int> mp;
+        for(char c : str){
+            mp[c]++;
+        }
+        
+        priority_queue<pair<int, char>> pq;
+        for(auto& it: mp){
+            pq.push({it.second, it.first});
+        }
+        
+        pair<int, char> prev = {-1, '#'};
+        string ans = "";
+        
+        while(!pq.empty()){
+            pair<int, char> curr = pq.top();
+            pq.pop();
+            
+            curr.first--;
+            ans += curr.second;
+            
+            if(prev.first > 0){
+                pq.push(prev);
+            }
+            
+            prev = curr;
+            
+            if(pq.empty() && prev.first > 0){
+                return "-1";
+            }
+        }
+        
+        return ans;
+    }
+};
