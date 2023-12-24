@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int buyMaximumProducts(int n, int k, int price[]){
+        //Write your code here
+        vector<pair<int, int>> temp;
+        for(int i=0;i<n;i++){
+            temp.push_back({price[i], i+1});
+        }
+        sort(temp.begin(), temp.end());
+        int ans=0;
+        for(int i=0;i<n;i++){
+            if(k<temp[i].first) break;
+            if((k/temp[i].first)>temp[i].second ){
+                ans+=temp[i].second;
+                k-= (temp[i].second * temp[i].first);
+            }
+            else{
+                ans+= (k/temp[i].first);
+                k-= (k/temp[i].first)*temp[i].first;
+            }
+        }
+        return ans;
+    }
+};
+ 
+ 
+ 
