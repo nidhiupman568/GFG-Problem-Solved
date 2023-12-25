@@ -1,0 +1,50 @@
+class Solution {
+public:
+    Node* divide(int N, Node *head) {
+        if (!head || !head->next) {
+            return head;
+        }
+
+        Node *evenStart = NULL;
+        Node *evenEnd = NULL;
+        Node *oddStart = NULL;
+        Node *oddEnd = NULL;
+        
+        Node *curr = head;
+        
+        while(curr){
+            int val = curr->data;
+            
+            if(val & 1){
+                if(!oddStart){
+                    oddStart = curr;
+                    oddEnd = oddStart;
+                }
+                else{
+                    oddEnd->next = curr;
+                    oddEnd = oddEnd->next;
+                }
+            }
+            else{
+                if(!evenStart){
+                    evenStart = curr;
+                    evenEnd = evenStart;
+                }
+                else{
+                    evenEnd->next = curr;
+                    evenEnd = evenEnd->next;
+                }
+            }
+            
+            curr = curr->next;
+        }
+        
+        if(!evenStart || !oddStart) return head;
+        
+        evenEnd->next = oddStart;
+        oddEnd->next = NULL;
+        
+        head = evenStart;
+        return head;
+    }
+};
