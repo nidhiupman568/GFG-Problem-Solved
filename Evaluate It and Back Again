@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+#define fi first
+#define se second 
+const int N=25,mod=998244353;
+ll a,b,pw[N];
+string ans;
+string work(int op,ll a,int tp) {
+	string s="";
+	for(int i=18;~i;i--) {
+		int x=a/pw[i],y=(x>9?x-9:0);a%=pw[i];
+		if(x) {
+			s+=(op?"-":"+")+to_string(pw[i])+"*"+to_string(min(x,9));
+			if(tp)s+=(op?"+0":"-0");
+		}
+		if(y) {
+			s+=(op?"-":"+")+to_string(pw[i])+"*"+to_string(y);
+			if(tp)s+=(op?"+0":"-0");
+		}
+	}
+	if(op)s+="-0";
+	return s;
+}
+int main() {
+	ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+	cin>>a>>b,pw[0]=1;
+	for(int i=1;i<=18;i++)pw[i]=pw[i-1]*10+1;
+	if(abs(a-b)&1)ans+="12+",a-=12,b-=21;
+	if(a<b)ans+="0"+work(1,(b-a)/2,1);
+	else ans+="0"+work(0,(a-b)/2,1);
+	a=(a+b)/2;
+	if(a<0)ans+=work(1,-a,0);else ans+=work(0,a,0);
+	assert(ans.size()<=1000);
+	cout<<ans<<'\n';
+	reverse(ans.begin(),ans.end());
+	cerr<<ans<<'\n';
+	return 0;
+}
