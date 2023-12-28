@@ -1,0 +1,22 @@
+class Solution
+{
+    public:
+        vector <int> search(string pat, string txt)
+        {
+            vector <int> soln;  
+            
+            int n = txt.size();   // text size
+            int m = pat.size();   // pattern size
+            
+            for(int i=0; i<n; i++) {
+                if(txt.substr(i,m) == pat) {
+                    soln.push_back(i+1);
+                }
+            }
+            if(soln.empty()) {
+                return {-1};
+            }
+            return soln;
+        }
+     
+};
