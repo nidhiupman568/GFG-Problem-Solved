@@ -1,0 +1,32 @@
+map<string,int>m;
+        
+        for(int i=0;i<n;i++){
+            m[arr[i]]++;
+        }
+        
+        int maxi=INT_MIN;
+        for(auto i:m){
+            if(i.second>maxi){
+                maxi=i.second;
+            }
+        }
+        
+        vector<string>v;
+        
+        for(auto i:m){
+            if(i.second==maxi){
+                v.push_back(i.first);
+            }
+        }
+        
+        sort(v.begin(),v.end());
+        
+        string t=v[0];
+        int len=t.length();
+        string y=to_string(maxi);
+        
+        vector<string>o;
+        
+        o.push_back(t);
+        o.push_back(y);
+        return o;
