@@ -1,0 +1,54 @@
+class Solution{
+  public:
+  
+    void generate(int indx , int dots , string temp , string& s , vector<string>&ans )
+    {
+        
+        if(dots == 0)
+        {
+            
+            if(indx == s.size()){
+                temp.pop_back() ; // remove extra . at last 
+                ans.push_back(temp) ; 
+            }
+            
+            return ; 
+        }
+        
+        if(s[indx] == '0')
+        {
+            generate(indx + 1 , dots-1 , temp + "0." , s , ans) ; 
+            return ; 
+        }
+        
+
+       // try to check 3 digits 
+
+       // 111  => 1.  , 11. , 111. 
+        for(int i = 1 ;i <= 3 ; i++)
+        {
+            if(i + indx <= s.size())
+            {
+                string temp1 = s.substr(indx , i) ; 
+           
+                int val = stoi(temp1) ; // convert string to int 
+                
+                if(val >= 256 ) // invalid ip 
+                continue ; 
+                
+                generate(indx + i, dots - 1 , temp + temp1 + "." , s , ans) ; 
+            }
+        }
+    }
+    vector<string> genIp(string &s) {
+        
+        if(s.size() < 4 || s.size() > 12)
+        return {} ; 
+        
+        vector<string>ans ; 
+        generate(0 , 4 ,"" ,s ,  ans) ; 
+        
+        return ans ; 
+    }
+
+};
