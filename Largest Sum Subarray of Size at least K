@@ -1,0 +1,33 @@
+class Solution{
+    #define ll long long
+    public:    
+    long long int maxSumWithK(long long int a[], long long int n, long long int k) 
+    {
+        ll ans=-1e9,sum=0,prev_sum=0;
+        ll i=0,j=0;
+        while(j<n)
+        {
+            sum+=a[j];
+            if(j-i+1==k)
+            {
+                ans=max(ans,sum);
+            }
+            else if(j-i+1>k)
+            {
+                ans=max(ans,sum);
+                prev_sum+=a[i];
+                i++;
+                if(prev_sum<0)
+                {
+                    sum-=prev_sum;
+                    ans=max(ans,sum);
+                    prev_sum=0;
+                }
+                
+            }
+            j++;
+        }
+        return ans;
+        
+    }
+};
