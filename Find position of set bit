@@ -1,0 +1,14 @@
+class Solution {
+  public:
+    int findPosition(int N) 
+    {
+        if(N==0) return -1;
+        int x = log2(N);
+        int y = N & (N-1);
+          if(!y)
+          {
+              return x+1;
+          }
+          else return -1;
+    }
+};
