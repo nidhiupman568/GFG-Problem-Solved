@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    vector<vector<int>> uniquePerms(vector<int> &arr ,int n) {
+        set<vector<int>> ans;
+        permute(ans,n,0,arr);
+        vector<vector<int>> nums(ans.begin(),ans.end());
+        return nums;
+    }
+    void permute(set<vector<int>> &ans,int n,int index,vector<int> &str){
+        if(index == n){
+            ans.insert(str);
+            return;
+        }
+        for(int i =index;i < n;i++){
+            swap(str[index],str[i]);
+            permute(ans,n,index +1,str);
+            swap(str[index],str[i]);
+        }
+    }
+};
