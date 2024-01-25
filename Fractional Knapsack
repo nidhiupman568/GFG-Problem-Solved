@@ -1,0 +1,27 @@
+class Solution
+{
+    public:
+    struct  my_cmp{
+        bool operator() (const Item &p1 ,const Item &p2){
+            return p1.value/(p1.weight*1.0) > p2.value/(p2.weight*1.0); 
+        }
+    };
+    double fractionalKnapsack(int W, Item arr[], int n)
+    {
+        sort(arr, arr+n, my_cmp());
+        double res = 0;
+        int curr_w = W;
+        
+        for(int i{0}; i < n ; ++i) {
+            if(arr[i].weight <= curr_w){
+                res += arr[i].value;
+                curr_w -= arr[i].weight;
+            }
+            else {
+                res += arr[i].value * curr_w / (arr[i].weight*1.0);
+                break;
+            }
+        }
+        return res;
+    }
+};
