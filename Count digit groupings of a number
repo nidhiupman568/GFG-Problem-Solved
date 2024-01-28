@@ -1,0 +1,29 @@
+class Solution{
+public:
+int F(string &str,int ind,int sum,vector<vector<int>> &dp)
+{
+    if(ind==str.size())
+    {
+        return 1;
+    }
+    
+    if(dp[ind][sum]!=-1)return dp[ind][sum];
+    
+    int tmp=0,ans=0;
+    for(int i=ind;i<str.size();i++)
+    {
+       tmp+=(str[i]-'0');
+       if(tmp>=sum)
+       {
+           ans+=F(str,i+1,tmp,dp);
+       }
+    }
+    return dp[ind][sum]= ans;
+}
+int TotalCount(string str){
+    int n=str.size();
+    vector<vector<int>> dp(n, vector<int>(1000, -1));
+    return F(str,0,0,dp);
+}
+
+};
