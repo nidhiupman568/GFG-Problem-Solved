@@ -1,0 +1,42 @@
+class Solution
+{
+    public:
+        //Function to insert string into TRIE.
+        void insert(struct TrieNode *root, string key)
+        {
+            // code here
+            
+               // code here
+    if(key.length()==0){
+        root->isLeaf=true;
+        return;
+    }
+    int index=key[0]-'a';
+    struct TrieNode*child;
+    if(root->children[index]!=NULL){
+        child=root->children[index];
+    }else{
+        child=getNode();
+        root->children[index]=child;
+    }
+    insert(child,key.substr(1));
+        }
+        
+        //Function to use TRIE data structure and search the given string.
+        bool search(struct TrieNode *root, string key) 
+        {
+            // code here
+            
+             
+       // code here
+    if(root==NULL){
+        return false;
+    }
+    if(key.length()==0){
+        return root->isLeaf;
+    }
+    int index=key[0]-'a';
+    struct TrieNode*child=root->children[index];
+    return search(child,key.substr(1));
+        }
+};
