@@ -1,0 +1,118 @@
+class Solution {
+public:
+    Node* solve(Node*x2,Node*x1,Node*y2,Node*y1){
+        Node*last=nullptr;
+        while(x2 || y2){
+            int t = (!y2)?0:y2->data;
+            int l = (!x2)?0:x2->data;
+            
+            if(t<l){
+                t+=10;
+                if(y1)y1->data--;
+            }
+            
+            Node*aux = new Node(t-l);
+            if(last==nullptr){
+                last=aux;
+                aux->next=nullptr;
+            }
+            else{
+                aux->next = last;
+                last = aux;
+            }
+            
+            if(x1)x1=x1->next;
+            if(x2)x2=x2->next;
+            if(y1)y1=y1->next;
+            if(y2)y2=y2->next;
+        }
+        
+        while(last and last->data==0){
+            last=last->next;
+        }
+        
+        Node*s = new Node(0);
+        return (last)?last:s;
+    }
+    Node* subLinkedList(Node* head1, Node* head2) {
+        Node*x=head1;Node*y=head2;
+        while(x and x->data==0){
+            x=x->next;
+        }
+        while(y and y->data==0){
+            y=y->next;
+        }
+        if(!x){
+            x=new Node(0);
+        }
+        if(!y){
+            y=new Node(0);
+        }
+        head1=x,head2=y;
+        Node*prevX=nullptr;Node*prevY=nullptr;
+        Node*prev2X=nullptr;Node*prev2Y=nullptr;
+        bool isXSmall = false;
+        bool isYSmall = false;
+        while(x and y){
+            if(x->data<y->data and !isYSmall){
+                isXSmall = true;
+            }
+            else if(x->data>y->data and !isXSmall){
+                isYSmall = true;
+            }
+            
+            prev2X = prevX;prev2Y = prevY;
+            prevX = x;prevY = y;
+            x=x->next;
+            y=y->next;
+        }
+        
+        Node*X=x;Node*Y=y;
+        while(x){
+            prev2X = prevX;
+            prevX = x;
+            x=x->next;
+        }
+        
+        while(y){
+            prev2Y = prevY;
+            prevY = y;
+            y=y->next;
+        }
+        
+        //reverseLinkedLists
+        Node*temp = nullptr;
+        Node*node = head1;
+        while(node){
+            Node*t = node->next;
+            node->next=temp;
+            temp = node;
+            node = t;
+        }
+        
+        temp=nullptr;
+        node=head2;
+        while(node){
+            Node*t = node->next;
+            node->next=temp;
+            temp = node;
+            node = t;
+        }
+        
+        
+        if(!X and !Y){
+            if(isXSmall){
+                return solve(prevX,prev2X,prevY,prev2Y);}
+            else{
+                return solve(prevY,prev2Y,prevX,prev2X);
+            }
+        }
+        else if(X){
+            return solve(prevY,prev2Y,prevX,prev2X);
+        }
+        else{
+            return solve(prevX,prev2X,prevY,prev2Y);
+        }
+        return NULL;
+    }
+};
