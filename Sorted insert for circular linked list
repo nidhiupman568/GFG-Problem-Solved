@@ -1,0 +1,76 @@
+
+Sushanttodkar
+6 months ago
+
+class Solution
+{
+    public:
+    Node *sortedInsert(Node* head, int data)
+    {
+         if(head==nullptr)
+         {
+             head=new Node(data);
+             //head->data=data;
+             head->next=head;
+         }
+         else
+         { 
+             Node*curr=head;
+             Node*prev=head;
+             
+             while(curr)
+             {
+                
+                 if(curr==head)
+                 {
+                     if(head->data>=data)
+                     {
+                         Node*prevHead=head;
+                         Node*temp=new Node(data);
+                         temp->next=head;
+                         head=temp;
+                         Node*p1=prevHead;
+                         while(p1->next!=prevHead)
+                         {
+                           //  cout<<p1->data<<endl;
+                             p1=p1->next;
+                             
+                         }
+                         //cout<<"*"<<endl;
+                        // cout<<p1->data<<endl;
+                         
+                         p1->next=head;
+                        
+                         break;
+                         
+                     }
+                     
+                     
+                 }
+                 
+                 if(curr->data>=data)
+                 {
+                     Node*temp=new Node(data);
+                     prev->next=temp;
+                     temp->next=curr;
+                     break;
+                 }
+                 
+                 if(curr->next==head)
+                 {
+                     Node*temp=new Node(data);
+                     curr->next=temp;
+                     temp->next=head;
+                     break;
+                 }
+                 
+                  prev=curr;
+                  curr=curr->next;
+             }
+             
+         }
+         
+         return head;
+    }
+};
+
