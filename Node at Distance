@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    int printKDistantfromLeaf(Node* root, int k) {
+    	std::unordered_set<Node*> set;
+    	std::vector<std::pair<Node*, int>> stack;
+    	
+    	stack.push_back({root, 0});
+    	
+    	while (stack.size() != 0) {
+    	    if (stack.size() > k && stack.back().first->left == nullptr && stack.back().first->right == nullptr) {
+    	        set.insert(stack.at(stack.size() - k - 1).first);
+    	    }
+    	    
+    	    if (stack.back().second == 2) {
+    	        stack.pop_back();
+    	        continue;
+    	    }
+
+    	    if (stack.back().second == 0 && stack.back().first->left != nullptr) {
+    	        stack.back().second = 1;
+    	        stack.push_back({stack.back().first->left, 0});
+    	    } else if (stack.back().second == 1 && stack.back().first->right != nullptr) {
+    	        stack.back().second = 2;
+    	        stack.push_back({stack.back().first->right, 0});
+    	    } else {
+    	        stack.back().second++;
+    	    }
+    	}
+
+    	return set.size();
+    }
+};
