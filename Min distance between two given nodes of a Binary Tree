@@ -1,0 +1,42 @@
+class Solution{
+    public:
+    int func(Node* root){
+        if(root==NULL)return 0;
+        return max(root->data,max(func(root->left),func(root->right)));
+    }
+    void func1(Node* root,vector<int>adj[]){
+        if(root==NULL)return;
+        
+        if(root->left!=NULL){
+            adj[root->data].push_back(root->left->data);
+            adj[root->left->data].push_back(root->data);
+        }
+        if(root->right!=NULL){
+            adj[root->data].push_back(root->right->data);
+            adj[root->right->data].push_back(root->data);
+        }
+        func1(root->left,adj);
+        func1(root->right,adj);
+    }
+    int findDist(Node* root, int a, int b) {
+        int n=func(root);
+        vector<int>adj[n+1];
+        func1(root,adj);
+        queue<pair<int,int>>q;
+        q.push({a,0});
+        vector<int>dist(n+1,1e9);
+        dist[a]=0;
+        while(!q.empty()){
+            int node=q.front().first;
+            int dis=q.front().second;
+            q.pop();
+            for(auto it: adj[node]){
+                if(1+dis<dist[it]){
+                    dist[it]=1+dis;
+                    q.push({it,1+dis});
+                }
+            }
+        }
+        return dist[b];
+    }
+};
