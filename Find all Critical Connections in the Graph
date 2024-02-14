@@ -1,0 +1,43 @@
+class Solution {
+public:
+int timer=1;
+ void dfs(int node,int parent,vector<int>&visi,vector<int>adj[],int tin[],int low[],vector<vector<int>>&bridge){
+      visi[node]=1;
+      tin[node]=low[node]=timer;
+      timer++;
+      for(auto it:adj[node]){
+         if(it==parent) continue;
+          if(visi[it]==0){
+              dfs(it,node,visi,adj,tin,low,bridge);
+              low[node]=min(low[it],low[node]);
+              if(low[it]>tin[node]){
+                    if(node<it){
+                    bridge.push_back({node,it});
+                    }else{
+                       bridge.push_back({it,node}); 
+                    }
+              }
+          }else{
+              low[node]=min(low[it],low[node]);
+          }
+      }
+ }
+   vector<vector<int>>criticalConnections(int n, vector<int> adj[]){
+        // vector<int>adj[n];
+        // for(auto it:ad){
+        //     adj[it[0]].push_back(it[1]);
+        //     adj[it[1]].push_back(it[0]);
+
+        // }
+        vector<int>visi(n,0);
+        int tin[n];
+        int low[n];
+        vector<vector<int>>bridge;
+        dfs(0,-1,visi,adj,tin,low,bridge);
+        sort(bridge.begin(),bridge.end());
+        return bridge;
+
+    }
+    
+
+};
