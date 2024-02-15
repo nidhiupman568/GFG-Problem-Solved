@@ -1,0 +1,36 @@
+class Solution {
+public:
+    pair<Node*, Node*> solve(Node* node) {
+        if (!node) return {NULL, NULL};
+
+        pair<Node*, Node*> leftPair = {NULL, NULL};
+        pair<Node*, Node*> rightPair = {NULL, NULL};
+        
+        Node* first_node = NULL;
+        Node* last_node = NULL;
+
+        if (node->left) {
+            leftPair = solve(node->left);
+            leftPair.second->right = node;
+            node->left = NULL;
+            first_node = leftPair.first;
+        } else {
+            first_node = node;
+        }
+
+        if (node->right) {
+            rightPair = solve(node->right);
+            node->right = rightPair.first;
+            last_node = rightPair.second;
+        } else {
+            last_node = node;
+        }
+
+        return {first_node, last_node};
+    }
+
+    Node *flattenBST(Node *root)
+    {
+        return (solve(root).first);
+    }
+};
