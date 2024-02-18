@@ -1,0 +1,10 @@
+class Solution
+{
+    public:
+        int sumOfLeafNodes(Node *root ){
+            if(!root) return 0;
+            if(root->right == NULL && root->left==NULL)
+                return root->data;
+            return sumOfLeafNodes(root->left)+sumOfLeafNodes(root->right);
+        }
+};
