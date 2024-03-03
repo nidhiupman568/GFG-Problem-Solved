@@ -1,0 +1,12 @@
+class Solution{
+public:
+	static bool comp(string &a, string &b) {
+	    return (a+b)>(b+a);
+	}
+	string printLargest(int n, vector<string> &a) {
+	    sort(a.begin(), a.end(), comp);
+	    string ans="";
+	    for(auto x: a) ans += x;
+	    return ans;
+	}
+};
