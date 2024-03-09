@@ -1,0 +1,21 @@
+class Solution{
+  public:
+    char nthCharacter(string s, int r, int n) {
+        string ans=s;
+    
+        while(r>0){
+            string st="";
+            for(int i=0;i<s.size();i++){
+                if(ans[i]=='0') st+="01";
+                else st+="10";
+            }
+            
+            ans=st;
+          
+            r--;
+        }
+        // cout<<ans<<" -"<<cnt<<" ";
+      
+        return ans[n];
+    }
+};
