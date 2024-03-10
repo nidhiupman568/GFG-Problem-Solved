@@ -1,0 +1,21 @@
+class Solution{
+public:
+	string removeDuplicates(string str) {
+	    // Declare frequency array of size 58 to include both small and capital letters
+	    int freq[58]={0};
+	    for(int i=0;i<str.length();i++)
+	        freq[str[i]-'A']++;
+	    
+	    string ans="";
+	    for(int i=0;i<str.length();i++)
+	    {
+	        if(freq[str[i]-'A']>0)
+	        {
+	            ans+=str[i];
+	            freq[str[i]-'A'] = -freq[str[i]-'A'];
+	        }
+	    }
+	    return ans;
+	   
+	}
+};
