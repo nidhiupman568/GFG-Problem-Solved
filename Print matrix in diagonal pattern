@@ -1,0 +1,33 @@
+class Solution{
+  public:
+    vector<int> matrixDiagonally(vector<vector<int>>&mat)
+    {
+        vector<int>ans;
+        int i=0,j=0;
+        int n=mat.size(),m=mat[0].size();
+        while(i<n and j<m){
+            ans.push_back(mat[i][j]);
+            //right or down move
+            if(i==n-1 and j==m-1) break;
+            if(j+1<m){
+                j++;
+            }
+            else if(i+1<n) i++;
+            // diagonally downward
+            while(i+1<n and j-1>=0){
+                ans.push_back(mat[i++][j--]);
+            }
+            ans.push_back(mat[i][j]);
+            //down or right
+            if(i+1<n) i++;
+            else if(j+1<m) j++;
+            //diagonally upward
+            while(i-1>=0 and j+1<m){
+                ans.push_back(mat[i--][j++]);
+            }
+        }
+        return ans;
+            
+    }
+};
+
