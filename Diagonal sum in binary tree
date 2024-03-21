@@ -1,0 +1,46 @@
+/*Complete the function below
+Node is as follows:
+struct Node{
+    int data;
+    Node *left,*right;
+};
+*/
+
+class Solution
+{
+    public:
+    vector <int> diagonalSum(Node* root) {
+        // Add your code here
+         vector<int>res;
+    queue<Node*>q;
+    q.push(root);
+    if(root==0)
+    return res;
+    while(!q.empty())
+    {   int sum=0;
+       int size= q.size();
+       for(int i=0;i< size;i++)
+       
+        {
+            Node* node = q.front();
+        
+        q.pop();
+       
+        while(node)
+        {  
+            if(node->left)
+             q.push(node->left);
+             sum+=node->data;
+            
+              node=node->right;
+            
+        }
+
+        }
+       
+        res.push_back(sum);
+        
+    }
+    return res;
+    }
+};
