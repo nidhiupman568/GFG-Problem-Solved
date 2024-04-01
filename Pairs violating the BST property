@@ -1,0 +1,60 @@
+class Solution {
+  public:
+    int merge(vector<int>& in, int lo, int hi, int mid)
+    {
+        int inv_cnt = 0;
+        vector<int> temp(hi - lo + 1);
+        int i = lo, j = mid+1, k = 0;
+        while(i <= mid && j <= hi)
+        {
+            if(in[i] <= in[j])
+            {
+                temp[k++] = in[i++];
+            }
+            else
+            {
+                temp[k++] = in[j++];
+                inv_cnt += mid - i + 1;
+            }
+        }
+        while(i <= mid)
+        {
+            temp[k++] = in[i++];
+        }
+        while(j <= hi)
+        {
+            temp[k++] = in[j++];
+        }
+        for(int x = lo; x <= hi; x++)
+        {
+            in[x] = temp[x-lo];
+        }
+        return inv_cnt;
+    }
+    int mergeSort(vector<int> &in, int lo, int hi)
+    {
+        int cnt = 0;
+        if(hi > lo)
+        {
+            int mid = lo + (hi - lo)/2;
+            cnt += mergeSort(in,lo,mid);
+            cnt += mergeSort(in,mid+1,hi);
+            cnt += merge(in,lo,hi,mid);
+        }
+        return cnt;
+    }
+    void inorder(Node* root, vector<int> &in)
+    {
+        if(!root) return;
+        inorder(root->left,in);
+        in.push_back(root->data);
+        inorder(root->right,in);
+    }
+    /*You are required to complete below function */
+    int pairsViolatingBST(int n, Node *root) {
+        // your code goes here
+        vector<int> in;
+        inorder(root,in);
+        return mergeSort(in,0,n-1);
+    }
+};
