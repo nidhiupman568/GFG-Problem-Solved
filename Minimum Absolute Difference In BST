@@ -1,0 +1,26 @@
+class Solution
+{
+    public:
+    int mini=INT_MAX;
+    Node* prev=NULL;
+    void inorder(Node* root){
+        if(root==NULL)
+        return;
+        
+        inorder(root->left);
+        
+        if(prev!=NULL)
+        mini=min(mini, abs(root->data-prev->data));;
+        
+        prev=root;
+        
+        inorder(root->right);
+    }
+    int absolute_diff(Node *root)
+    {
+        //Your code here
+        
+        inorder(root);
+        return mini;
+    }
+};
