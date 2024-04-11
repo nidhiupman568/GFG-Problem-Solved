@@ -1,0 +1,26 @@
+//User function Template for C++
+
+class Solution{
+    public:
+    // function to convert a given Gray equivalent n to Binary equivalent.
+    int grayToBinary(int n)
+    {
+        vector<int>temp(31,0);
+        for(int i=0;i<=30;i++){
+            if(((1LL<<i)&n)!=0){
+                temp[i]+=1;
+            }
+        }
+        for(int i=29;i>=0;i--){
+            temp[i]^=temp[i+1];
+        }
+        int num=0;
+        for(int i=0;i<=30;i++){
+            if(temp[i]==1) num=num+(1<<i);
+        }
+        return num;
+        
+        // Your code here
+        
+    }
+};
