@@ -1,0 +1,15 @@
+// User function Template for C++
+class Solution {
+  public:
+    vector<int> countElements(vector<int> &a, vector<int> &b, int n, vector<int> &query,
+                              int q) {
+        // Your code goes here;
+         sort(b.begin(),b.end());
+        vector<int> ans;
+        for(auto x:query){
+            auto it=upper_bound(b.begin(),b.end(),a[x])-b.begin();
+            ans.push_back(it);
+        }
+        return ans;
+    }
+};
