@@ -1,0 +1,32 @@
+class Solution{
+    public:
+    int lenth(Node*head){
+        Node*t=head;
+        int c=0;
+        while(t!=NULL){
+            c++;
+            t=t->next;
+            
+        }
+        return c;
+    }
+    Node* deleteMid(Node* head)
+    {
+        // Your Code Here
+        int len=lenth(head);
+        int d=len/2;
+        Node*t=head;
+        Node*t1=NULL;
+        while(d--){
+            t1=t;
+            t=t->next;
+         
+            
+            
+        }
+        t1->next=t->next;
+        t=NULL;
+        return head;
+        
+    }
+};
