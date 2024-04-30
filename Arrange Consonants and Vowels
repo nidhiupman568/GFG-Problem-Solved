@@ -1,0 +1,30 @@
+class Solution
+{
+    public:
+    struct Node* arrangeCV(Node *head)
+    {
+       queue<char>v,c;
+       Node* T=head;
+       while(T)
+       {
+           char ch=T->data;  T=T->next;
+           if(ch!='a' and ch!='e' and ch!='i' and ch!='o' and ch!='u')
+           {
+               c.push(ch);
+           }
+           else
+           v.push(ch);
+       }
+       T=head;
+       while(T)
+       {
+           if(v.size()){
+           T->data=v.front();v.pop();}
+           else{
+             T->data=c.front();c.pop();}
+             T=T->next;
+       }
+       return head;
+       
+    }
+};
