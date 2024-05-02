@@ -1,0 +1,41 @@
+class Solution {
+public:
+    void inorder(Node* root, vector<int>& v) {
+        if (root == NULL) return;
+        inorder(root->left, v);
+        v.push_back(root->data);
+        inorder(root->right, v);
+    }
+
+    vector<int> serialize(Node *root) {
+        vector<int> v;
+        inorder(root, v);
+        return v;
+    }
+
+    Node* buildtree(vector<int>& v, int start, int end) {
+        if (start > end) return NULL;
+        int i = findMaxIndex(v, start, end);
+        Node* root = new Node(v[i]);
+        if (start == end) return root;
+        root->left = buildtree(v, start, i - 1);
+        root->right = buildtree(v, i + 1, end);
+        return root;
+    }
+
+    int findMaxIndex(vector<int>& v, int start, int end) {
+        int maxVal = v[start], maxInd = start;
+        for (int i = start + 1; i <= end; i++) {
+            if (maxVal < v[i]) {
+                maxVal = v[i];
+                maxInd = i;
+            }
+        }
+        return maxInd;
+    }
+
+    Node* deSerialize(vector<int>& v) {
+        return buildtree(v, 0, v.size() - 1);
+    }
+};
+
