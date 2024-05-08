@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    void helper(Node * root,vector<vector<int>> & ans, vector<int> subans){
+        if(!root) return;
+        if(!root->left and !root->right){
+            subans.push_back(root->data);
+            ans.push_back(subans);
+            return;
+        } 
+        subans.push_back(root->data);
+        helper(root->left,ans, subans);
+        helper(root->right,ans,subans);
+    }
+    vector<vector<int>> Paths(Node* root) {
+        // code here
+        vector<vector<int>> ans;
+        vector<int> subans;
+        helper(root,ans,subans);
+        return ans;
+    }
+};
