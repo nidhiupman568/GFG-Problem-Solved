@@ -1,0 +1,38 @@
+class Solution {
+  public:
+    void dfs(int node, vector<int> adj[], vector<bool> &visited, unordered_set<int> &st){
+        visited[node] = true;
+        st.insert(node);
+        for(int &neigh : adj[node]){
+            if(visited[neigh] == false){
+                dfs(neigh, adj, visited, st);
+            }
+        }
+    }
+    int findNumberOfGoodComponent(int e, int v, vector<vector<int>> &edges) {
+        vector<int> adj[v+1];
+        for(int i = 0; i < e; i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        int count = 0;
+        vector<bool> visited(v+1, false);
+        for(int i = 1; i <= v; ++i){
+            if(visited[i] == false){
+                unordered_set<int> st;
+                dfs(i, adj, visited, st);
+                bool flag = true;
+                for(int node : st){
+                    if(adj[node].size() != (st.size()-1)){
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag)    count++;
+            }
+        }
+        return count;
+    }
+};
