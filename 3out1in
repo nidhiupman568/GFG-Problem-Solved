@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define int ll
+#define endl '\n'
+
+void solution();
+
+signed main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	
+	int t; cin >> t;
+	while (t--)
+	    solution();
+	return 0;
+}
+
+void solution() {
+    int n, q;
+    cin >> n >> q;
+    
+    int arr[n];
+    for (int i = 0; i < n; i++) cin >> arr[i];
+    
+    int queries[q];
+    for (int i = 0; i < q; i++) cin >> queries[i];
+    
+    int ans[n];
+    
+    priority_queue<int> maxH;
+    priority_queue<int, vector<int>, greater<int>> minH;
+    
+    int maxSum = 0, minSum = 0;
+    
+    int i = 0;
+    
+    while (i < n) {
+        if (maxH.size() == minH.size()) {
+            if (!maxH.empty() && arr[i] < maxH.top()) {
+                int top = maxH.top(); maxH.pop();
+                maxSum -= top;
+                
+                minH.push(top);
+                minSum += top;
+                
+                maxH.push(arr[i]);
+                maxSum += arr[i];
+                
+            }
+            else {
+                minH.push(arr[i]);
+                minSum += arr[i];
+            }
+        }
+        else {
+            if (!minH.empty() && arr[i] > minH.top()) {
+                int top = minH.top(); minH.pop();
+                minSum -= top;
+                
+                maxH.push(top);
+                maxSum += top;
+                
+                minH.push(arr[i]);
+                minSum += arr[i];
+            }
+            else {
+                maxH.push(arr[i]);
+                maxSum += arr[i];
+            }
+        }
+        
+        if (i%2 == 0) ans[i] = minSum - maxSum;
+        i++;
+    }
+    
+    for (int qr : queries) {
+        cout << ans[qr-1] << " ";   
+    }
+    cout << endl;
+    return;
+}
+
