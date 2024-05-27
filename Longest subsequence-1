@@ -1,0 +1,13 @@
+class Solution {
+  public:
+    int longestSubseq(int n, vector<int> &a) {
+        return f(0,-1,n,a);
+    }
+    int f(int inx,int prev,int n,vector<int> &a){
+        if(inx == n) return 0;
+        int take = 0,notTake=0;
+        if(prev==-1 or abs(a[prev]-a[inx])==1) take = 1+f(inx+1,inx,n,a);
+        notTake = f(inx+1,prev,n,a);
+        return max(take,notTake);
+    }
+};
