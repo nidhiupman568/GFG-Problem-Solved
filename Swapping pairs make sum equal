@@ -1,0 +1,28 @@
+class Solution {
+
+  public:
+    int findSwapValues(int a[], int n, int b[], int m) {
+        // Your code goes here
+        unordered_set<int> st;
+        int s1 = 0, s2 = 0;
+        for(int i = 0; i<n; i++){
+            s1 += a[i];
+        }
+        for(int i = 0; i<m; i++){
+            s2 += b[i];
+            st.insert(b[i]);
+        }
+        int s = s1 + s2;
+        if(s%2 == 1)    return -1;
+        int temp = s/2;
+        for(int i = 0; i<n; i++){
+            int rem = s1 - a[i];
+            if(rem >= temp) continue;
+            int tofind = temp - rem;
+            if(st.find(tofind) != st.end()){
+                return 1;
+            }
+        }
+        return -1;
+    }
+};
