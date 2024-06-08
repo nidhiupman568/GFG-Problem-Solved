@@ -1,0 +1,29 @@
+class Solution {
+    
+    public:
+    
+    int findExtra(int n, int arr1[], int arr2[])
+    {
+        
+        if(arr1[0] != arr2[0]) return 0 ;
+        if(arr1[n - 1] != arr2[n - 2]) return n - 1 ;
+        
+        int low = 0 , high = n - 1 , extraIndex = -1 ;
+        
+        while(low <= high)
+        {
+            int mid = low + (high - low) / 2 ;
+            
+            if(arr1[mid] == arr2[mid])
+                low = mid + 1 ;
+            else if(arr1[mid] != arr2[mid])
+            {
+                extraIndex = mid ;
+                high = mid - 1 ;
+            }
+        }
+        
+        return extraIndex ;
+        
+    }
+};
