@@ -1,0 +1,13 @@
+class Solution {
+public:
+    void matchPairs(int n, char nuts[], char bolts[]) {
+        // Assuming that 'n' is the size of both 'nuts' and 'bolts' arrays
+        
+       
+        sort(nuts, nuts + n);
+        sort(bolts, bolts + n);
+        
+        
+        
+    }
+};
