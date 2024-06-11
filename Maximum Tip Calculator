@@ -1,0 +1,27 @@
+class Solution {
+public:
+    long long maxTip(int n, int x, int y, vector<int> &arr, vector<int> &brr) {
+        vector<pair<int, int>> diffs(n);
+        for (int i = 0; i < n; ++i) {
+            diffs[i] = {abs(arr[i] - brr[i]), i};
+        }
+        
+        sort(diffs.rbegin(), diffs.rend());
+        
+        long long totalTip = 0;
+        int aOrders = 0, bOrders = 0;
+        
+        for (int i = 0; i < n; ++i) {
+            int idx = diffs[i].second;
+            if ((arr[idx] >= brr[idx] && aOrders < x) || bOrders >= y) {
+                totalTip += arr[idx];
+                ++aOrders;
+            } else {
+                totalTip += brr[idx];
+                ++bOrders;
+            }
+        }
+        
+        return totalTip;
+    }
+};
