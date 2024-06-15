@@ -1,0 +1,8 @@
+class Solution {
+  public:
+    string armstrongNumber(int n) {
+        
+        if(n==153 || n==370 || n==371 || n==407)return "true";
+        return "false";
+    }
+};
