@@ -1,0 +1,11 @@
+class Solution {
+  public:
+
+    string printString(string s, char ch, int count) {
+        int i=0;
+        for(i=0;i<s.size() && count;i++){
+            if(s[i] == ch) count--;
+        }
+        return (count || i == s.size()) ? "" : s.substr(i,s.size()-i+1);
+    }
+};
