@@ -1,0 +1,33 @@
+class Solution {
+public:
+    long long int findMaxProduct(vector<int>& arr) {
+        const int MOD = 1e9 + 7;
+        long long maxProduct = 1;
+        int negCount = 0;
+        int maxNeg = INT_MIN;
+        int zeroCount = 0;
+        int n = arr.size();
+        
+        for (int num : arr) {
+            if (num == 0) {
+                zeroCount++;
+                continue;
+            }
+            
+            if (num < 0) {
+                negCount++;
+                maxNeg = max(maxNeg, num);
+            }
+            
+            maxProduct = (maxProduct * num) % MOD;
+        }
+        
+        if (zeroCount == n) return 0;
+        
+        if (negCount % 2 == 0) return maxProduct < 0 ? 0 : maxProduct;
+        
+        if (negCount == 1 && zeroCount > 0 && zeroCount + negCount == n) return 0;
+        
+        return (maxProduct / maxNeg) % MOD;
+    }
+};
