@@ -1,0 +1,40 @@
+class Solution {
+private:
+    void inorderTraversal(Node* root, vector<int>& result) {
+        if (root == nullptr) return;
+        
+        inorderTraversal(root->left, result);
+        result.push_back(root->data);
+        inorderTraversal(root->right, result);
+    }
+    
+    vector<int> mergeSortedArrays(const vector<int>& arr1, const vector<int>& arr2) {
+        vector<int> merged;
+        int i = 0, j = 0;
+        
+        while (i < arr1.size() && j < arr2.size()) {
+            if (arr1[i] <= arr2[j]) {
+                merged.push_back(arr1[i++]);
+            } else {
+                merged.push_back(arr2[j++]);
+            }
+        }
+        
+        while (i < arr1.size()) merged.push_back(arr1[i++]);
+        while (j < arr2.size()) merged.push_back(arr2[j++]);
+        
+        return merged;
+    }
+
+public:
+    vector<int> merge(Node *root1, Node *root2) {
+        vector<int> result1, result2;
+        
+        // Perform in-order traversal on both BSTs
+        inorderTraversal(root1, result1);
+        inorderTraversal(root2, result2);
+        
+        // Merge the two sorted arrays
+        return mergeSortedArrays(result1, result2);
+    }
+};
