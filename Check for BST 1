@@ -1,0 +1,20 @@
+class Solution {
+private:
+    bool isBSTUtil(Node* node, long long min, long long max) {
+        // Base case: an empty tree is a BST
+        if (node == nullptr) return true;
+        
+        // Check if the current node's value is within the valid range
+        if (node->data <= min || node->data >= max) return false;
+        
+        // Recursively check left and right subtrees
+        return isBSTUtil(node->left, min, node->data) &&
+               isBSTUtil(node->right, node->data, max);
+    }
+
+public:
+    // Function to check whether a Binary Tree is BST or not.
+    bool isBST(Node* root) {
+        return isBSTUtil(root, LLONG_MIN, LLONG_MAX);
+    }
+};
