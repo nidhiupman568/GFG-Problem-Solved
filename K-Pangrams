@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool kPangram(string str, int k) {
+        // Use bitset to track unique characters
+        bitset<26> unique_chars;
+        int extra_chars = 0;
+
+        // Count unique and extra characters
+        for (char c : str) {
+            if (isalpha(c)) {
+                int index = tolower(c) - 'a';
+                if (!unique_chars[index]) {
+                    unique_chars.set(index);
+                } else {
+                    extra_chars++;
+                }
+            }
+        }
+
+        int missing_chars = 26 - unique_chars.count();
+        return missing_chars <= min(k, extra_chars);
+    }
+};
