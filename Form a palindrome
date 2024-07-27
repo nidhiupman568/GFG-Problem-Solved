@@ -1,0 +1,30 @@
+class Solution {
+private:
+    vector<vector<int>> memo;
+    
+    int minInsertions(const string& s, int left, int right) {
+        // Base case: single character or empty string
+        if (left >= right) return 0;
+        
+        // If already computed, return memoized result
+        if (memo[left][right] != -1) return memo[left][right];
+        
+        // If characters match, no insertion needed
+        if (s[left] == s[right]) {
+            memo[left][right] = minInsertions(s, left + 1, right - 1);
+        } else {
+            // Try inserting at the beginning or at the end
+            memo[left][right] = 1 + min(minInsertions(s, left + 1, right),
+                                        minInsertions(s, left, right - 1));
+        }
+        
+        return memo[left][right];
+    }
+
+public:
+    int countMin(string str) {
+        int n = str.length();
+        memo.assign(n, vector<int>(n, -1));
+        return minInsertions(str, 0, n - 1);
+    }
+};
