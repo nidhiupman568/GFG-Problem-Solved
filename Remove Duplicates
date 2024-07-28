@@ -1,0 +1,19 @@
+#include <string>
+#include <unordered_set>
+
+class Solution {
+public:
+    string removeDups(string str) {
+        unordered_set<char> seen;
+        string result;
+        
+        for (char c : str) {
+            if (seen.find(c) == seen.end()) {
+                seen.insert(c);
+                result += c;
+            }
+        }
+        
+        return result;
+    }
+};
