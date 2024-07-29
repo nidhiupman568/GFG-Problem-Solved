@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int rowWithMax1s(vector<vector<int>>& arr) {
+        int n = arr.size();
+        int m = arr[0].size();
+        int row = 0;
+        int col = m - 1;
+        int max_row_index = -1;
+        
+        while (row < n && col >= 0) {
+            if (arr[row][col] == 1) {
+                max_row_index = row;
+                col--;
+            } else {
+                row++;
+            }
+        }
+        
+        return max_row_index;
+    }
+};
