@@ -5,7 +5,7 @@
 Hello! I'm thrilled to share my journey and accomplishments on GeeksforGeeks with you. 🚀✨
 
 ## 🌐 About Me
-🏆🌟I solve the **Problem of the Day** on GeeksforGeeks daily 🗓️🧩 and have successfully tackled **Love Babbar's 450 DSA** sheet 📚 and **Fraz's 180 DSA** sheet 📘. My primary coding language is **C++** 💻, but I have also solved many problems in **Java** ☕. 🏆🌟
+🏆🌟I solve the **Problem of the Day** on GeeksforGeeks daily 🗓️🧩 and have successfully tackled **Love Babbar's 450 DSA** sheet 📚 and **Striver's 180 DSA** sheet 📘. My primary coding language is **C++** 💻, but I have also solved many problems in **Java** ☕. 🏆🌟
 
 ## 🏆 My Achievements
 - Solved the daily Problem of the Day on GFG 🧠🔥
