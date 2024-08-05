@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> bottomView(Node *root) {
+        vector<int> result;
+        if (!root) return result;
+        
+        // Map to store horizontal distance and node value
+        map<int, int> bottomNodes;
+        
+        // Queue for level order traversal
+        queue<pair<Node*, int>> q;
+        q.push(make_pair(root, 0));
+        
+        while (!q.empty()) {
+            Node* node = q.front().first;
+            int hd = q.front().second;
+            q.pop();
+            
+            // Update the value for this horizontal distance
+            bottomNodes[hd] = node->data;
+            
+            if (node->left) q.push(make_pair(node->left, hd - 1));
+            if (node->right) q.push(make_pair(node->right, hd + 1));
+        }
+        
+        // Extract values from the map
+        for (const auto& pair : bottomNodes) {
+            result.push_back(pair.second);
+        }
+        
+        return result;
+    }
+};
