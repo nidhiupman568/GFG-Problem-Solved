@@ -1,0 +1,30 @@
+class Solution {
+private:
+   
+    pair<bool, int> isSumTreeFast(Node* node) {
+      
+        if (node == nullptr) return {true, 0};
+        
+        
+        if (node->left == nullptr && node->right == nullptr) 
+            return {true, node->data};
+        
+      
+        auto left = isSumTreeFast(node->left);
+        auto right = isSumTreeFast(node->right);
+        
+    
+        bool isSumTree = left.first && right.first;
+        
+      
+        isSumTree = isSumTree && (node->data == left.second + right.second);
+        
+      
+        return {isSumTree, node->data + left.second + right.second};
+    }
+
+public:
+    bool isSumTree(Node* root) {
+        return isSumTreeFast(root).first;
+    }
+};
