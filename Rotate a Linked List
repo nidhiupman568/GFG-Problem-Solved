@@ -1,0 +1,26 @@
+class Solution {
+public:
+    Node* rotate(Node* head, int k) {
+        if (head == NULL || head->next == NULL || k == 0)
+            return head;
+        Node* current = head;
+        Node* kthNode = NULL;
+        int length = 1;
+           while (current->next != NULL) {
+            if (length == k)
+                kthNode = current;
+              current = current->next;
+            length++;
+        }
+        if (k == length)
+            return head;
+        if (k > length)
+            return rotate(head, k % length);
+        if (kthNode == NULL)
+            kthNode = current;
+        current->next = head;  
+        head = kthNode->next;  
+        kthNode->next = NULL;  
+        return head;
+    }
+};
