@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int SumofMiddleElements(vector<int> &arr1, vector<int> &arr2) {
+        int n = arr1.size();
+        int total = n * 2;
+        int left = (total / 2) - 1;
+        int right = total / 2;
+        int count = 0;
+        int i = 0, j = 0;
+        int leftElement = 0, rightElement = 0;
+        
+        while (count <= right) {
+            int num;
+            if (i < n && j < n) {
+                if (arr1[i] < arr2[j]) {
+                    num = arr1[i++];
+                } else {
+                    num = arr2[j++];
+                }
+            } else if (i < n) {
+                num = arr1[i++];
+            } else {
+                num = arr2[j++];
+            }
+            
+            if (count == left) {
+                leftElement = num;
+            }
+            if (count == right) {
+                rightElement = num;
+                break;
+            }
+            count++;
+        }
+        return leftElement + rightElement;
+    }
+};
