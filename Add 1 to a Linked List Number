@@ -1,0 +1,59 @@
+// User function template for C++
+
+/*
+
+struct Node
+{
+    int data;
+    struct Node* next;
+
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+
+class Solution {
+private:
+    Node* reverse(Node* head) {
+        Node* prev = nullptr;
+        Node* current = head;
+        Node* next = nullptr;
+        while (current != nullptr) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        return prev;
+    }
+
+public:
+    Node* addOne(Node* head) {
+        if (head == nullptr) return new Node(1);
+        
+        // Step 1: Reverse the linked list
+        head = reverse(head);
+        
+        // Step 2: Add 1 to the number
+        Node* current = head;
+        int carry = 1;
+        
+        while (current != nullptr && carry > 0) {
+            int sum = current->data + carry;
+            current->data = sum % 10;
+            carry = sum / 10;
+            
+            if (carry > 0 && current->next == nullptr) {
+                current->next = new Node(0);
+            }
+            
+            current = current->next;
+        }
+        
+        // Step 3: Reverse the list back
+        return reverse(head);
+    }
+};
