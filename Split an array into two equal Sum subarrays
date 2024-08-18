@@ -1,0 +1,26 @@
+
+class Solution {
+public:
+    bool canSplit(vector<int>& arr) {
+        long long totalSum = 0;
+        for (int num : arr) {
+            totalSum += num;
+        }
+        
+        if (totalSum % 2 != 0) {
+            return false;
+        }
+        
+        long long targetSum = totalSum / 2;
+        long long currentSum = 0;
+        
+        for (int num : arr) {
+            currentSum += num;
+            if (currentSum == targetSum) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+};
