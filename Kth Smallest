@@ -1,0 +1,32 @@
+class Solution {
+private:
+    int partition(vector<int>& arr, int left, int right) {
+        int pivot = arr[right];
+        int i = left - 1;
+        
+        for (int j = left; j < right; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr[i], arr[j]);
+            }
+        }
+        swap(arr[i + 1], arr[right]);
+        return i + 1;
+    }
+    
+    int quickSelect(vector<int>& arr, int left, int right, int k) {
+        if (left == right) return arr[left];
+        
+        int pivotIndex = partition(arr, left, right);
+        int count = pivotIndex - left + 1;
+        
+        if (count == k) return arr[pivotIndex];
+        if (count > k) return quickSelect(arr, left, pivotIndex - 1, k);
+        return quickSelect(arr, pivotIndex + 1, right, k - count);
+    }
+
+public:
+    int kthSmallest(vector<int>& arr, int k) {
+        return quickSelect(arr, 0, arr.size() - 1, k);
+    }
+};
