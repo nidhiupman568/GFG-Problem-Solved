@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int findMaxDiff(vector<int> &arr) {
+        int n = arr.size();
+        vector<int> leftSmaller(n, 0);
+        vector<int> rightSmaller(n, 0);
+        stack<int> st;
+        
+        // Find nearest left smaller elements
+        for (int i = 0; i < n; i++) {
+            while (!st.empty() && arr[st.top()] >= arr[i]) {
+                st.pop();
+            }
+            if (!st.empty()) {
+                leftSmaller[i] = arr[st.top()];
+            }
+            st.push(i);
+        }
+        
+        // Clear the stack for reuse
+        while (!st.empty()) st.pop();
+        
+        // Find nearest right smaller elements
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.empty() && arr[st.top()] >= arr[i]) {
+                st.pop();
+            }
+            if (!st.empty()) {
+                rightSmaller[i] = arr[st.top()];
+            }
+            st.push(i);
+        }
+        
+        // Find maximum difference
+        int maxDiff = 0;
+        for (int i = 0; i < n; i++) {
+            maxDiff = max(maxDiff, abs(leftSmaller[i] - rightSmaller[i]));
+        }
+        
+        return maxDiff;
+    }
+};
