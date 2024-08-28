@@ -1,0 +1,33 @@
+class Solution {
+public:
+    static bool compare(const pair<int, int>& a, const pair<int, int>& b) {
+        if (a.second != b.second) return a.second > b.second;
+        return a.first < b.first;
+    }
+
+    vector<int> sortByFreq(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> count(100001, 0);
+        
+        for (int num : arr) {
+            count[num]++;
+        }
+        
+        vector<pair<int, int>> freq;
+        for (int i = 1; i <= 100000; i++) {
+            if (count[i] > 0) {
+                freq.emplace_back(i, count[i]);
+            }
+        }
+        
+        sort(freq.begin(), freq.end(), compare);
+        
+        vector<int> result;
+        result.reserve(n);
+        for (const auto& p : freq) {
+            result.insert(result.end(), p.second, p.first);
+        }
+        
+        return result;
+    }
+};
