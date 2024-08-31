@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> find3Numbers(vector<int> &arr) {
+        int n = arr.size();
+        if (n < 3) return {};
+        
+        vector<int> leftMin(n);
+        leftMin[0] = arr[0];
+        for (int i = 1; i < n; i++) {
+            leftMin[i] = min(leftMin[i-1], arr[i]);
+        }
+        
+        int rightMax = arr[n-1];
+        for (int i = n-2; i > 0; i--) {
+            if (arr[i] > leftMin[i] && arr[i] < rightMax) {
+                return {leftMin[i], arr[i], rightMax};
+            }
+            rightMax = max(rightMax, arr[i]);
+        }
+        
+        return {};
+    }
+};
