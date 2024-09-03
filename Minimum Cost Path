@@ -1,0 +1,53 @@
+
+
+#include <queue>
+#include <vector>
+#include <climits>
+
+class Solution {
+public:
+    int minimumCostPath(vector<vector<int>>& grid) {
+        int n = grid.size();
+        vector<vector<int>> dist(n, vector<int>(n, INT_MAX));
+        
+        // Define the four possible directions: right, down, left, up
+        vector<pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        
+        // Priority queue to store {cost, {x, y}}
+        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
+        
+        // Start from the top-left cell
+        pq.push({grid[0][0], {0, 0}});
+        dist[0][0] = grid[0][0];
+        
+        while (!pq.empty()) {
+            int cost = pq.top().first;
+            int x = pq.top().second.first;
+            int y = pq.top().second.second;
+            pq.pop();
+            
+            // If we've reached the bottom-right cell, return the cost
+            if (x == n-1 && y == n-1) return cost;
+            
+            // Explore all four directions
+            for (auto& dir : directions) {
+                int newX = x + dir.first;
+                int newY = y + dir.second;
+                
+                // Check if the new position is within the grid
+                if (newX >= 0 && newX < n && newY >= 0 && newY < n) {
+                    int newCost = cost + grid[newX][newY];
+                    
+                    // If we've found a cheaper path to this cell
+                    if (newCost < dist[newX][newY]) {
+                        dist[newX][newY] = newCost;
+                        pq.push({newCost, {newX, newY}});
+                    }
+                }
+            }
+        }
+        
+        // This line should never be reached if the grid is valid
+        return -1;
+    }
+};
