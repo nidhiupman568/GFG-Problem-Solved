@@ -1,0 +1,18 @@
+class Solution {
+  public:
+    int missingNumber(int n, vector<int>& arr) {
+        int xor_sum = 0;
+        
+        // XOR all numbers from 1 to n
+        for (int i = 1; i <= n; i++) {
+            xor_sum ^= i;
+        }
+        
+        // XOR with all elements in the array
+        for (int num : arr) {
+            xor_sum ^= num;
+        }
+        
+        return xor_sum;
+    }
+};
