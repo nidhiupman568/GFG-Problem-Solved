@@ -1,0 +1,62 @@
+#include <vector>
+#include <string>
+#include <unordered_map>
+
+class Solution {
+private:
+    std::vector<int> parent;
+    std::vector<int> rank;
+
+    int find(int x) {
+        if (parent[x] != x)
+            parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    void unite(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return;
+        if (rank[px] < rank[py])
+            parent[px] = py;
+        else if (rank[px] > rank[py])
+            parent[py] = px;
+        else {
+            parent[py] = px;
+            rank[px]++;
+        }
+    }
+
+public:
+    int isCircle(std::vector<std::string> &arr) {
+        int n = arr.size();
+        parent.resize(26);
+        rank.resize(26, 0);
+        for (int i = 0; i < 26; i++)
+            parent[i] = i;
+
+        std::vector<int> inDegree(26, 0), outDegree(26, 0);
+        std::unordered_map<int, bool> seen;
+
+        for (const auto &s : arr) {
+            int u = s.front() - 'a';
+            int v = s.back() - 'a';
+            unite(u, v);
+            outDegree[u]++;
+            inDegree[v]++;
+            seen[u] = seen[v] = true;
+        }
+
+        int root = -1;
+        for (const auto &pair : seen) {
+            int vertex = pair.first;
+            if (root == -1)
+                root = find(vertex);
+            else if (find(vertex) != root)
+                return 0;
+            if (inDegree[vertex] != outDegree[vertex])
+                return 0;
+        }
+
+        return 1;
+    }
+};
