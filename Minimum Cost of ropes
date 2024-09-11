@@ -1,0 +1,24 @@
+#include <queue>
+#include <vector>
+
+class Solution {
+public:
+    long long minCost(vector<long long>& arr) {
+   std::priority_queue<long long, std::vector<long long>, std::greater<long long>> pq;
+        for (const auto& rope : arr) {
+            pq.push(rope);
+        }
+        long long cost = 0;
+        while (pq.size() > 1) {
+        long long first = pq.top();
+            pq.pop();
+            long long second = pq.top();
+            pq.pop();
+            long long combined = first + second;
+            cost += combined;
+            pq.push(combined);
+        }
+        
+        return cost;
+    }
+};
