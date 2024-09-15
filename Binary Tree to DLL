@@ -1,0 +1,33 @@
+class Solution
+{
+    private:
+    Node* prev = NULL;
+    void convertToDLL(Node* root)
+    {
+       if (root == NULL) return;
+        convertToDLL(root->left);
+        if (prev == NULL)
+        {
+            prev = root;
+        }
+        else
+        {
+            root->left = prev;
+            prev->right = root;
+            prev = root;
+        }
+        convertToDLL(root->right);
+    }
+    public: 
+    Node * bToDLL(Node *root)
+    {
+        if (root == NULL) return NULL;
+        convertToDLL(root);
+        while (root->left != NULL)
+        {
+            root = root->left;
+        }
+        
+        return root;
+    }
+};
