@@ -1,0 +1,50 @@
+/* Link list Node
+struct Node {
+    int data;
+    Node *next;
+    Node *random;
+
+    Node(int x) {
+        data = x;
+        next = NULL;
+        random = NULL;
+    }
+};*/
+
+class Solution {
+public:
+    Node *copyList(Node *head) {
+        if (!head) return nullptr;
+        
+        // First pass: Create copy nodes and insert them between original nodes
+        Node* curr = head;
+        while (curr) {
+            Node* copy = new Node(curr->data);
+            copy->next = curr->next;
+            curr->next = copy;
+            curr = copy->next;
+        }
+        
+        // Second pass: Assign random pointers for the copy nodes
+        curr = head;
+        while (curr) {
+            if (curr->random)
+                curr->next->random = curr->random->next;
+            curr = curr->next->next;
+        }
+        
+        // Third pass: Separate the original and copied lists
+        Node* original = head;
+        Node* copy = head->next;
+        Node* copyHead = copy;
+        
+        while (original && copy) {
+            original->next = original->next->next;
+            copy->next = copy->next ? copy->next->next : nullptr;
+            original = original->next;
+            copy = copy->next;
+        }
+        
+        return copyHead;
+    }
+};
