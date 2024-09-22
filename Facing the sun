@@ -1,0 +1,17 @@
+// User function template for C++
+class Solution {
+public:
+    int countBuildings(vector<int> &height) {
+        int count = 0;
+        int maxHeight = 0;
+        
+        for (int h : height) {
+            if (h > maxHeight) {
+                count++;
+                maxHeight = h;
+            }
+        }
+        
+        return count;
+    }
+};
