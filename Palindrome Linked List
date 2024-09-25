@@ -1,0 +1,51 @@
+/*
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};
+*/
+
+class Solution {
+private:
+    Node* reverseList(Node* head) {
+        Node *prev = nullptr, *curr = head, *next = nullptr;
+        while (curr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+public:
+    bool isPalindrome(Node *head) {
+        if (!head || !head->next) return true;
+        
+        // Find the middle of the list
+        Node *slow = head, *fast = head;
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        // Reverse the second half
+        Node* secondHalf = reverseList(slow->next);
+        
+        // Compare the first and second half
+        Node* firstHalf = head;
+        while (secondHalf) {
+            if (firstHalf->data != secondHalf->data) {
+                return false;
+            }
+            firstHalf = firstHalf->next;
+            secondHalf = secondHalf->next;
+        }
+        
+        return true;
+    }
+};
