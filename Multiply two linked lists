@@ -1,0 +1,22 @@
+class solution {
+public:
+    long long multiplyTwoLists(Node* first, Node* second) {
+        const int MOD = 1e9 + 7;
+        long long num1 = 0, num2 = 0;
+        
+        // Convert first linked list to number
+        while (first) {
+            num1 = (num1 * 10 + first->data) % MOD;
+            first = first->next;
+        }
+        
+        // Convert second linked list to number
+        while (second) {
+            num2 = (num2 * 10 + second->data) % MOD;
+            second = second->next;
+        }
+        
+        // Multiply the two numbers
+        return (num1 * num2) % MOD;
+    }
+};
