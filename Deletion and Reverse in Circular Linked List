@@ -1,0 +1,54 @@
+class Solution {
+public:
+    // Function to reverse a circular linked list
+    Node* reverse(Node* head) {
+        if (!head || !head->next)
+            return head;
+        
+        Node *prev = nullptr, *curr = head, *next = nullptr;
+        do {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        } while (curr != head);
+        
+        head->next = prev;
+        return prev;
+    }
+
+    // Function to delete a node from the circular linked list
+    Node* deleteNode(Node* head, int key) {
+        if (!head)
+            return nullptr;
+        
+        Node *curr = head, *prev = nullptr;
+        while (curr->data != key) {
+            if (curr->next == head) {
+                return head;  // Key not found
+            }
+            prev = curr;
+            curr = curr->next;
+        }
+        
+        if (curr == head && curr->next == head) {
+            delete curr;
+            return nullptr;
+        }
+        
+        if (curr == head) {
+            prev = head;
+            while (prev->next != head)
+                prev = prev->next;
+            head = curr->next;
+            prev->next = head;
+        } else if (curr->next == head) {
+            prev->next = head;
+        } else {
+            prev->next = curr->next;
+        }
+        
+        delete curr;
+        return head;
+    }
+};
