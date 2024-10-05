@@ -1,0 +1,15 @@
+class Solution {
+public:
+    long long findSmallest(vector<int>& arr) {
+        long long result = 1;
+        
+        for (int num : arr) {
+            if (num > result) {
+                return result;
+            }
+            result += num;
+        }
+        
+        return result;
+    }
+};
