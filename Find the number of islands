@@ -1,0 +1,41 @@
+class Solution {
+private:
+    // Helper function to perform DFS and mark visited cells
+    void dfs(vector<vector<char>>& grid, int row, int col, int n, int m) {
+        // Check if current position is out of bounds or not land
+        if (row < 0 || col < 0 || row >= n || col >= m || grid[row][col] != '1')
+            return;
+        
+        // Mark current cell as visited by changing it to '2'
+        grid[row][col] = '2';
+        
+        // Check all 8 directions
+        for(int i = -1; i <= 1; i++) {
+            for(int j = -1; j <= 1; j++) {
+                dfs(grid, row + i, col + j, n, m);
+            }
+        }
+    }
+    
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int islands = 0;
+        int n = grid.size();
+        if (n == 0) return 0;
+        int m = grid[0].size();
+        
+        // Iterate through each cell in the grid
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                // If we find a land cell that hasn't been visited
+                if (grid[i][j] == '1') {
+                    // Increment island count and perform DFS to mark all connected lands
+                    islands++;
+                    dfs(grid, i, j, n, m);
+                }
+            }
+        }
+        
+        return islands;
+    }
+};
