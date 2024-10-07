@@ -1,0 +1,45 @@
+
+/// Insert function to add node at the beginning
+struct Node *insert(struct Node *head, int data) {
+    // Create new node
+    struct Node *newNode = new Node(data);
+    
+    // Set XOR of new node as current head
+    newNode->npx = head;
+    
+    if (head != NULL) {
+        // Get the next node of current head
+        struct Node *next = XOR(head->npx, NULL);
+        // Update head's npx to XOR of new node and next node
+        head->npx = XOR(newNode, next);
+    }
+    
+    // Return new node as head
+    return newNode;
+}
+
+vector<int> getList(struct Node *head) {
+    vector<int> result;
+    
+    if (!head) return result;
+    
+    // Initialize pointers
+    struct Node *curr = head;
+    struct Node *prev = NULL;
+    struct Node *next;
+    
+    // Traverse the list
+    while (curr != NULL) {
+        // Add current node's data to result
+        result.push_back(curr->data);
+        
+        // Get next node using XOR of previous and current node's npx
+        next = XOR(prev, curr->npx);
+        
+        // Move pointers one step forward
+        prev = curr;
+        curr = next;
+    }
+    
+    return result;
+}
