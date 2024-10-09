@@ -1,0 +1,37 @@
+class Solution {
+public:
+    Node* constructLinkedMatrix(vector<vector<int>>& mat) {
+        int n = mat.size();
+        if (n == 0) return NULL;
+        
+        // Create the first node
+        Node* head = new Node(mat[0][0]);
+        
+        // Create the first row
+        Node* rowHead = head;
+        for (int j = 1; j < n; j++) {
+            rowHead->right = new Node(mat[0][j]);
+            rowHead = rowHead->right;
+        }
+        
+        // Create subsequent rows
+        Node* prev = head;
+        for (int i = 1; i < n; i++) {
+            Node* curr = new Node(mat[i][0]);
+            prev->down = curr;
+            
+            Node* prevRight = prev->right;
+            for (int j = 1; j < n; j++) {
+                curr->right = new Node(mat[i][j]);
+                prevRight->down = curr->right;
+                
+                curr = curr->right;
+                prevRight = prevRight->right;
+            }
+            
+            prev = prev->down;
+        }
+        
+        return head;
+    }
+};
