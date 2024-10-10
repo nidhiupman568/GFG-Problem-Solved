@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int maxDistance(vector<int> &arr) {
+        unordered_map<int, int> firstOccurrence;
+        int maxDist = 0;
+        int n = arr.size();
+        
+        for (int i = 0; i < n; i++) {
+            if (firstOccurrence.find(arr[i]) == firstOccurrence.end()) {
+                firstOccurrence[arr[i]] = i;
+            } else {
+                maxDist = max(maxDist, i - firstOccurrence[arr[i]]);
+            }
+        }
+        
+        return maxDist;
+    }
+};
