@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int subArraySum(vector<int>& arr, int tar) {
+        unordered_map<long long, int> prefixSumCount;
+        long long currentSum = 0;
+        int count = 0;
+        
+        prefixSumCount[0] = 1;  // Initialize with 0 sum occurring once
+        
+        for (int num : arr) {
+            currentSum += num;
+            long long complement = currentSum - tar;
+            
+            count += prefixSumCount[complement];
+            
+            prefixSumCount[currentSum]++;
+        }
+        
+        return count;
+    }
+};
