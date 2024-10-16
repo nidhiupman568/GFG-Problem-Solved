@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    bool checkSorted(vector<int> &arr) {
+        // code here.
+        int c=0;
+        for(int i=0;i<arr.size();){
+            if(arr[i]!=i+1){
+                swap(arr[i],arr[arr[i]-1]);
+                c++;
+            }
+            else i++;
+        }
+        return (c==0 || c==2);
+    }
+};
