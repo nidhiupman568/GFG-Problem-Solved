@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<Node*> alternatingSplitList(Node* head) {
+        if (!head) return {nullptr, nullptr};
+        
+        Node* odd = head;
+        Node* even = head->next;
+        Node* evenHead = even;
+        
+        while (even && even->next) {
+            odd->next = even->next;
+            odd = odd->next;
+            even->next = odd->next;
+            even = even->next;
+        }
+        
+        odd->next = nullptr;
+        return {head, evenHead};
+    }
+};
