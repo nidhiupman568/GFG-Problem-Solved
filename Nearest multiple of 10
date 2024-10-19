@@ -1,0 +1,26 @@
+#include <string>
+
+class Solution {
+public:
+    string roundToNearest(string str) {
+        int n = str.length();
+        int lastDigit = str[n-1] - '0';
+        
+        if (lastDigit == 0) return str;  // Already a multiple of 10
+        
+        if (lastDigit <= 5) {
+            str[n-1] = '0';
+        } else {
+            int carry = 1;
+            str[n-1] = '0';
+            for (int i = n-2; i >= 0 && carry; i--) {
+                int digit = str[i] - '0' + carry;
+                str[i] = (digit % 10) + '0';
+                carry = digit / 10;
+            }
+            if (carry) str = "1" + str;
+        }
+        
+        return str;
+    }
+};
