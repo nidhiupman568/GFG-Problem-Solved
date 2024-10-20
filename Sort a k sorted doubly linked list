@@ -1,0 +1,53 @@
+#include <queue>
+
+class Solution {
+public:
+    struct CompareNode {
+        bool operator()(DLLNode* a, DLLNode* b) {
+            return a->data > b->data;
+        }
+    };
+
+    DLLNode* sortAKSortedDLL(DLLNode* head, int k) {
+        if (!head || !head->next)
+            return head;
+
+        std::priority_queue<DLLNode*, std::vector<DLLNode*>, CompareNode> pq;
+
+        // Initialize the min heap with first k+1 elements
+        DLLNode* current = head;
+        for (int i = 0; i <= k && current; ++i) {
+            pq.push(current);
+            current = current->next;
+        }
+
+        DLLNode* newHead = nullptr;
+        DLLNode* last = nullptr;
+
+        // Process remaining elements
+        while (!pq.empty()) {
+            DLLNode* top = pq.top();
+            pq.pop();
+
+            if (!newHead) {
+                newHead = top;
+                last = top;
+                last->prev = nullptr;
+            } else {
+                last->next = top;
+                top->prev = last;
+                last = top;
+            }
+
+            if (current) {
+                pq.push(current);
+                current = current->next;
+            }
+        }
+
+        if (last)
+            last->next = nullptr;
+
+        return newHead;
+    }
+};
