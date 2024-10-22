@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int sameOccurrence(vector<int>& arr, int x, int y) {
+        if (x == y) return (arr.size() * (arr.size() + 1)) / 2;
+        
+        int n = arr.size();
+        // diff will store count[x] - count[y]
+        // map stores {diff : frequency}
+        unordered_map<int, int> map;
+        
+        // Initialize with 0 diff seeing 1 time
+        map[0] = 1;
+        int diff = 0;
+        int result = 0;
+        
+        // Traverse array
+        for (int i = 0; i < n; i++) {
+            // Update difference based on current element
+            if (arr[i] == x) diff++;
+            if (arr[i] == y) diff--;
+            
+            // Add subarrays ending at current position
+            result += map[diff];
+            
+            // Update frequency of current difference
+            map[diff]++;
+        }
+        
+        return result;
+    }
+};
