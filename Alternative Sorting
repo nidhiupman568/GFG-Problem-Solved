@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> alternateSort(vector<int>& arr) {
+        int n = arr.size();
+        
+        // Sort the array
+        sort(arr.begin(), arr.end());
+        
+        // Create result array
+        vector<int> result(n);
+        
+        // Initialize two pointers
+        int left = 0;        // for smallest elements
+        int right = n - 1;   // for largest elements
+        
+        // Flag to alternate between largest and smallest
+        bool isLargest = true;
+        
+        // Fill the result array
+        for(int i = 0; i < n; i++) {
+            if(isLargest) {
+                result[i] = arr[right--];
+            } else {
+                result[i] = arr[left++];
+            }
+            isLargest = !isLargest;
+        }
+        
+        return result;
+    }
+};
