@@ -1,0 +1,31 @@
+/*
+Node class is as follows:
+
+class Node {
+    int data;
+    Node next;
+
+    public Node (int data){
+        this.data = data;
+        this.next = null;
+    }
+}
+*/
+
+class Solution {
+
+    // Return the sum of last k nodes
+    public int sumOfLastN_Nodes(Node head, int n) {
+         Node current = head;
+        List<Integer> list = new ArrayList<>();
+        int sum = 0;
+        while(current!=null){
+            sum += current.data;
+            list.add(sum);
+            current = current.next;
+        }
+        int len = list.size();
+        return len-n-1 > 0 ? (list.get(len-1) - list.get(len-n-1)) : list.get(len-1);
+        // write code here
+    }
+}
