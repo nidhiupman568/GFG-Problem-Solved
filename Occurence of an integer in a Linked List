@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int count(Node* head, int key) {
+        // Initialize counter and current pointer
+        int count = 0;
+        Node* current = head;
+        
+        // Traverse the linked list
+        while (current != nullptr) {
+            // If current node's data matches key, increment counter
+            if (current->data == key) {
+                count++;
+            }
+            // Move to next node
+            current = current->next;
+        }
+        
+        return count;
+    }
+};
