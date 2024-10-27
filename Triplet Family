@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool findTriplet(vector<int>& arr) {
+        int n = arr.size();
+        if(n < 3) return false;
+        
+        // Sort the array to optimize searching
+        sort(arr.begin(), arr.end());
+        
+        // Fix the largest element and look for pair that sums to it
+        for(int i = n-1; i >= 2; i--) {
+            int left = 0;
+            int right = i-1;
+            
+            while(left < right) {
+                // Check if current pair sums to target
+                if(arr[left] + arr[right] == arr[i]) {
+                    return true;
+                }
+                // If sum is less, increment left pointer
+                else if(arr[left] + arr[right] < arr[i]) {
+                    left++;
+                }
+                // If sum is more, decrement right pointer
+                else {
+                    right--;
+                }
+            }
+        }
+        return false;
+    }
+};
