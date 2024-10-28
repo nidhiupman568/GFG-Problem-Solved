@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> removeDuplicate(vector<int>& arr) {
+        // Since elements are between 2 and 100
+        // We can use a boolean array for O(1) lookups
+        bool seen[101] = {false}; // Initialize all to false
+        vector<int> result;
+        result.reserve(arr.size()); // Pre-allocate memory for efficiency
+        
+        // Single pass through the array
+        for(int num : arr) {
+            // If number hasn't been seen before, add it to result
+            if(!seen[num]) {
+                seen[num] = true;
+                result.push_back(num);
+            }
+        }
+        
+        return result;
+    }
+};
