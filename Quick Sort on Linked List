@@ -1,0 +1,82 @@
+class Solution {
+private:
+    // Helper function to find tail node of the linked list
+    Node* getTail(Node* head) {
+        if (!head) return nullptr;
+        while (head->next) {
+            head = head->next;
+        }
+        return head;
+    }
+    
+    // Partition function that returns the pivot node
+    Node* partition(Node* head, Node* tail, Node** newHead, Node** newTail) {
+        Node* pivot = tail;
+        Node* prev = nullptr;
+        Node* curr = head;
+        Node* end = pivot;
+        
+        while (curr != pivot) {
+            if (curr->data <= pivot->data) {
+                if (*newHead == nullptr) {
+                    *newHead = curr;
+                }
+                prev = curr;
+                curr = curr->next;
+            } else {
+                if (prev) {
+                    prev->next = curr->next;
+                }
+                Node* temp = curr->next;
+                curr->next = nullptr;
+                end->next = curr;
+                end = curr;
+                curr = temp;
+            }
+        }
+        
+        if (*newHead == nullptr) {
+            *newHead = pivot;
+        }
+        
+        *newTail = end;
+        return pivot;
+    }
+    
+    // QuickSort recursive helper function
+    Node* quickSortRec(Node* head, Node* tail) {
+        if (!head || head == tail) {
+            return head;
+        }
+        
+        Node* newHead = nullptr;
+        Node* newTail = nullptr;
+        
+        Node* pivot = partition(head, tail, &newHead, &newTail);
+        
+        if (newHead != pivot) {
+            Node* tmp = newHead;
+            while (tmp->next != pivot) {
+                tmp = tmp->next;
+            }
+            tmp->next = nullptr;
+            
+            newHead = quickSortRec(newHead, tmp);
+            
+            tmp = getTail(newHead);
+            tmp->next = pivot;
+        }
+        
+        pivot->next = quickSortRec(pivot->next, newTail);
+        
+        return newHead;
+    }
+    
+public:
+    Node* quickSort(Node* head) {
+        if (!head || !head->next) return head;
+        
+        Node* tail = getTail(head);
+        return quickSortRec(head, tail);
+    }
+};
