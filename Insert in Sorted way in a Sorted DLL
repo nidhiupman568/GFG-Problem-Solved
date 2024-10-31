@@ -1,0 +1,35 @@
+class Solution {
+public:
+    Node* sortedInsert(Node* head, int x) {
+        // Create new node manually since there's no constructor
+        Node* newNode = new Node;
+        newNode->data = x;
+        newNode->prev = NULL;
+        newNode->next = NULL;
+        
+        // If list is empty or x is smaller than head's value
+        if (head == NULL || x <= head->data) {
+            newNode->next = head;
+            if (head != NULL) {
+                head->prev = newNode;
+            }
+            return newNode;
+        }
+        
+        // Locate the node after which the new node is to be inserted
+        Node* current = head;
+        while (current->next != NULL && current->next->data < x) {
+            current = current->next;
+        }
+        
+        // Insert the new node
+        newNode->next = current->next;
+        newNode->prev = current;
+        if (current->next != NULL) {
+            current->next->prev = newNode;
+        }
+        current->next = newNode;
+        
+        return head;
+    }
+};
