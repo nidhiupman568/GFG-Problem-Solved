@@ -1,0 +1,32 @@
+class Solution {
+public:
+    long long maxSum(vector<int>& arr) {
+        // Sort the array first
+        int n = arr.size();
+        sort(arr.begin(), arr.end());
+        
+        // Create a new array to store the maximized arrangement
+        vector<int> maximized(n);
+        
+        // Place smaller and larger elements alternately
+        int small = 0, large = n - 1;
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 0) {
+                // Place smallest elements at even indices
+                maximized[i] = arr[small++];
+            } else {
+                // Place largest elements at odd indices
+                maximized[i] = arr[large--];
+            }
+        }
+        
+        // Calculate the sum of absolute differences
+        long long sum = 0;
+        for (int i = 0; i < n; i++) {
+            // Use modulo for circular array
+            sum += abs(maximized[i] - maximized[(i + 1) % n]);
+        }
+        
+        return sum;
+    }
+};
