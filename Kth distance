@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool checkDuplicatesWithinK(vector<int>& arr, int k) {
+        // Using unordered_set for O(1) lookup
+        unordered_set<int> window;
+        
+        for(int i = 0; i < arr.size(); i++) {
+            // If current element exists in window, we found a duplicate within k distance
+            if(window.find(arr[i]) != window.end()) {
+                return true;
+            }
+            
+            // Add current element to window
+            window.insert(arr[i]);
+            
+            // Remove element outside window of size k
+            if(i >= k) {
+                window.erase(arr[i-k]);
+            }
+        }
+        
+        return false;
+    }
+};
