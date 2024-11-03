@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isLengthEven(struct Node **head) {
+        // If list is empty, return true (length 0 is even)
+        if (*head == NULL) 
+            return true;
+            
+        // Traverse the list and count nodes using XOR of 1
+        bool isEven = true;  // Start with true (0 nodes)
+        struct Node* current = *head;
+        
+        while (current != NULL) {
+            isEven = !isEven;  // Toggle between true/false
+            current = current->next;
+        }
+        
+        return isEven;
+    }
+};
