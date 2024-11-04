@@ -1,0 +1,39 @@
+class Solution {
+  public:
+    void setMap(unordered_map<int,vector<int>> &um,vector<int> &arr){
+        int size=arr.size();
+        for(int i=0;i<size;i++){
+            um[arr[i]].push_back(i);
+        }
+        return;
+    }
+  
+  
+    vector<vector<int>> findTriplets(vector<int> &arr){
+        // Code here
+        unordered_map<int,vector<int>> um;                                                                
+        setMap(um,arr);
+        
+        vector<vector<int>> ans;
+        
+        int size=arr.size();
+        for(int i=0;i<size-2;i++){
+            for(int j=i+1;j<size-1;j++){
+                int sum=arr[i]+arr[j];
+                int target=0-sum;
+                
+                if(um.find(target)!=um.end()){
+                    for(auto idx:um[target]){
+                        if(idx>j)
+                            ans.push_back({i,j,idx});
+                    }    
+                    
+                }
+                
+            }
+        }
+        return ans;
+        
+        
+    }
+};
