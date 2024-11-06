@@ -1,0 +1,14 @@
+class Solution {
+  public:
+    int solve(Node*root, int parent){
+        if(!root)return 0;
+        if(root->left == NULL && root->right==NULL){
+            return (10*parent)+root->data;
+        }
+        root->data = 10*parent + root->data;
+        return solve(root->left,root->data) + solve(root->right,root->data);
+    }
+    int treePathsSum(Node *root) {
+        return solve(root,0);
+    }
+};
