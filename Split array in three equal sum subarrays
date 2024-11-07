@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    // Function to determine if array arr can be split into three equal sum sets.
+    vector<int> findSplit(vector<int>& arr) {
+             
+             
+             unordered_map<int,int>map; 
+             vector<int>v; 
+             
+             int sum =0; 
+             bool t  = false; 
+             for(int i = 0; i<arr.size(); i++){
+                 sum+=arr[i]; 
+                 v.push_back(sum); 
+                 map[sum]  = i; 
+                 
+                 if(arr[i]!= 0 ){
+                     t = true; 
+                 }
+             }
+             
+             if(!t){
+                 return {0,arr.size()/2} ; 
+             }
+             
+             for(int i = 0; i<arr.size(); i++){
+                 
+                 if( v[i]*3== sum &&  map.find(v[i]*2)!= map.end()){
+                     return {i,map[v[i]*2]}; 
+                 }
+             }
+             
+             return {-1,-1} ; 
+            
+    }
+};
