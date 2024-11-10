@@ -1,0 +1,52 @@
+class Solution {
+public:
+    vector<int> findUnion(vector<int> &a, vector<int> &b) {
+        vector<int> result;
+        int i = 0, j = 0;
+        int n = a.size(), m = b.size();
+        
+        // While both arrays have elements
+        while (i < n && j < m) {
+            // If elements are equal, add any one and move both pointers
+            if (a[i] == b[j]) {
+                if (result.empty() || result.back() != a[i]) {
+                    result.push_back(a[i]);
+                }
+                i++;
+                j++;
+            }
+            // If element in first array is smaller
+            else if (a[i] < b[j]) {
+                if (result.empty() || result.back() != a[i]) {
+                    result.push_back(a[i]);
+                }
+                i++;
+            }
+            // If element in second array is smaller
+            else {
+                if (result.empty() || result.back() != b[j]) {
+                    result.push_back(b[j]);
+                }
+                j++;
+            }
+        }
+        
+        // Process remaining elements of first array
+        while (i < n) {
+            if (result.empty() || result.back() != a[i]) {
+                result.push_back(a[i]);
+            }
+            i++;
+        }
+        
+        // Process remaining elements of second array
+        while (j < m) {
+            if (result.empty() || result.back() != b[j]) {
+                result.push_back(b[j]);
+            }
+            j++;
+        }
+        
+        return result;
+    }
+};
