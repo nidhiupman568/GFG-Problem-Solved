@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> findMajority(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> result;
+        sort(arr.begin(), arr.end());
+        
+        int OccuranceCount = 1;
+        int prev = arr[0];
+        
+        for(int i = 1; i < n; i++) {
+            if(arr[i] == prev) {
+                OccuranceCount++;
+            } else {
+                if(OccuranceCount > n/3) {
+                    result.push_back(prev);
+                }
+                OccuranceCount = 1;
+                prev = arr[i];
+            }
+        }
+        
+        // Check for the last element
+        if(OccuranceCount > n/3) {
+            result.push_back(prev);
+        }
+        
+        return result;
+    }
+};
