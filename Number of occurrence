@@ -1,0 +1,6 @@
+class Solution {
+  public:
+    int countFreq(vector<int>& v, int target) {
+        return upper_bound(v.begin(), v.end(), target) - lower_bound(v.begin(), v.end(), target);
+    }
+};
