@@ -1,0 +1,30 @@
+class Solution {
+  public:
+    int kthMissing(vector<int> &arr, int k) {
+        // Your code goes here
+        map<int,bool>mp;
+        int n=arr.size() - 1;
+        int maxi=arr[n];
+        for(int i=1;i <= maxi;i++){
+            mp[i]=false;
+        }
+        for(int i=0;i<=n;i++){
+            mp[arr[i]]=true;
+        }
+        int cnt=0;
+        vector<int>ans;
+        for(auto i:mp){
+            if(i.second == false){
+                ans.push_back(i.first);
+                cnt++;
+            }
+        }
+        if(cnt >= k){
+            int ansi=ans[k - 1];
+            return ansi;
+        }
+        int val=k - cnt;
+        int anss=maxi + val;
+        return anss;
+    }
+};
