@@ -1,0 +1,13 @@
+class Solution {
+  public:
+    int countPairs(vector<int> &arr, int target) {
+       map<int,int>m;
+       for(auto &i:arr)m[i]++;
+       int ans=0;
+       for(auto &i:arr){
+           m[i]--;
+           ans+=m[target-i];
+       }
+       return ans;
+    }
+};
