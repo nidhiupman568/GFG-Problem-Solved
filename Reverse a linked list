@@ -1,0 +1,37 @@
+class Solution {
+
+public:
+
+Node* reverseList(struct Node* head) {
+
+vector<int>ans;
+
+struct Node *temp = head;
+
+while(temp!= NULL) {
+
+       ans.push_back(temp->data);
+
+       temp = temp->next;
+
+}
+
+int i = ans.size()-1;
+
+temp = head;
+
+while(temp) {
+
+     temp->data = ans[i];
+
+     i--;
+
+    temp = temp->next;
+
+}
+
+return head;
+
+}
+
+};
