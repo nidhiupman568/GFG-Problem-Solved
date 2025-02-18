@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    bool sortByValue(const pair<pair<int,int>,int>& a, const pair<pair<int,int>,int>& b){
+        return a.second<b.second;
+    }
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        // Your code here
+        vector<vector<int>> ans;
+        vector<pair<int, pair<int,int>>> vec;
+        for(int i=0; i<points.size(); i++){
+            int dist = pow((points[i][0] - 0),2) + pow((points[i][1] - 0),2);
+            vec.push_back({dist,{points[i][0], points[i][1]}});
+        }
+        sort(vec.begin(), vec.end());
+        for(int i=0; i<k; i++){
+            ans.push_back({vec[i].second.first,vec[i].second.second});
+        }   
+        return ans;
+    }
+};
+
