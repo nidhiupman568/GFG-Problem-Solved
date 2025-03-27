@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int findPlatform(vector<int>& arr, vector<int>& dep) {
+        int n = arr.size();
+        sort(arr.begin(), arr.end());
+        sort(dep.begin(), dep.end());
+        
+        int platforms_needed = 0, max_platforms = 0;
+        int i = 0, j = 0;
+
+        while (i < n && j < n) {
+            // If a train is arriving before or at the same time as the current departure
+            if (arr[i] <= dep[j]) {
+                platforms_needed++;
+                i++;
+            }
+            // If a train has departed
+            else {
+                platforms_needed--;
+                j++;
+            }
+            // Track the maximum platforms needed
+            max_platforms = max(max_platforms, platforms_needed);
+        }
+        return max_platforms;
+    }
+};
