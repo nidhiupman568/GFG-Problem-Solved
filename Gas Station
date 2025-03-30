@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    int startStation(vector<int> &gas, vector<int> &cost) {
+        int n = gas.size();
+        
+        // to find the biggest gap between cost and gas
+        int temp = 0, index = 0;
+        for(int i = 0; i < n; i++)
+        {
+            int sub = gas[i] - cost[i];
+            if(sub > 0 && sub > temp)
+            {
+                index = i;
+                temp = sub;
+            }
+        }
+        
+        // start from the most possible(biggest gap) index
+        for(int i = index; i < index + n; i++)
+        {
+            int cur_gas = 0;
+            for(int j = i; j < i + n; j++)
+            {
+                cur_gas += gas[j % n];
+                cur_gas -= cost[j % n];
+                if(cur_gas < 0)
+                    break;
+            }
+            if(cur_gas >= 0) return i % n;
+        }
+        return -1;
+    }
+};
