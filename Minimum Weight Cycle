@@ -1,0 +1,65 @@
+class Solution {
+  public:
+    int findMinCycle(int V, vector<vector<int>>& edges) {
+        const int INF = 1e9;
+        vector<vector<pair<int, int>>> adj(V);
+
+        for (auto& edge : edges) {
+            int u = edge[0], v = edge[1], w = edge[2];
+            adj[u].push_back({v, w});
+            adj[v].push_back({u, w});
+        }
+
+        int minCycle = INF;
+
+        for (auto& edge : edges) {
+            int u = edge[0], v = edge[1], w = edge[2];
+
+            // Temporarily remove edge (u, v)
+            auto removeEdge = [&](int a, int b) {
+                adj[a].erase(remove_if(adj[a].begin(), adj[a].end(),
+                                       [b](const pair<int, int>& p) { return p.first == b; }),
+                             adj[a].end());
+            };
+
+            removeEdge(u, v);
+            removeEdge(v, u);
+
+            // Dijkstra from u to v
+            vector<int> dist(V, INF);
+            dist[u] = 0;
+
+            priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+            pq.push(make_pair(0, u));
+
+            while (!pq.empty()) {
+                pair<int, int> curr = pq.top();
+                pq.pop();
+                int d = curr.first;
+                int node = curr.second;
+
+                if (d > dist[node]) continue;
+
+                for (int i = 0; i < adj[node].size(); i++) {
+                    int nei = adj[node][i].first;
+                    int wt = adj[node][i].second;
+
+                    if (dist[node] + wt < dist[nei]) {
+                        dist[nei] = dist[node] + wt;
+                        pq.push(make_pair(dist[nei], nei));
+                    }
+                }
+            }
+
+            if (dist[v] != INF) {
+                minCycle = min(minCycle, dist[v] + w);
+            }
+
+            // Restore the edge
+            adj[u].push_back({v, w});
+            adj[v].push_back({u, w});
+        }
+
+        return (minCycle == INF) ? -1 : minCycle;
+    }
+};
