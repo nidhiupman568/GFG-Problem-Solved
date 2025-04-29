@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    Node* segregate(Node* head) {
+        unordered_map<int,int> mp;
+        Node* temp = head;
+        while(temp){
+            mp[temp->data]++;
+            temp = temp -> next;
+        }
+        
+        int zeroes = mp[0];
+        int ones = mp[1];
+        int twos = mp[2];
+        
+        temp = head;
+        while(temp){
+            if(zeroes){
+                temp -> data = 0;
+                zeroes--;
+            }else if(ones){
+                temp -> data = 1;
+                ones--;
+            }else{
+                temp -> data = 2;
+                twos--;
+            }
+            
+            temp = temp ->  next;
+        }
+        
+        
+        return head;
+        
+        
+    }
+};
