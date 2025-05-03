@@ -1,0 +1,50 @@
+class Solution {
+  public:
+  unordered_map<int,bool>mp;
+  
+  bool isprime(int n) {
+      if (n <= 1) return false;
+      if (n <= 3) return true;
+      if (n % 2 == 0 || n % 3 == 0) return false;
+     
+     
+      if (mp.find(n) != mp.end()) {
+          return mp[n];
+      }
+      
+      for (int i = 5; i * i <= n; i += 6) {
+          if (n % i == 0 || n % (i + 2) == 0) {
+              mp[n] = false;
+              return false;
+          }
+      }
+      
+      mp[n] = true;
+      return true;
+  }
+  int nearestPrime(int val){
+      int l = val -1;
+      int r = val + 1;
+      while(true){
+          if(l>=2 && isprime(l)){
+              return l;
+          }
+          if(isprime(r)){
+              return r;
+          }
+          l--;
+          r++;
+      }
+  }
+    Node *primeList(Node *head) {
+        // code here
+        Node *temp = head;
+        while(temp){
+            if(!isprime(temp->val))
+            temp->val=nearestPrime(temp->val);
+
+            temp = temp ->next;
+        }
+        return head;
+    }
+};
