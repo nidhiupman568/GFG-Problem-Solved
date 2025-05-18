@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    vector<int> findSpiral(Node* root) {
+        // code here
+        bool can_sort = true;
+        vector<int>v;
+        queue<Node*>q;
+        q.push(root);
+        while(q.size())
+        {
+            int cur_q_size = q.size();
+            int prev = v.size();
+            while(cur_q_size --> 0)
+            {
+                auto node = q.front();
+                v.push_back(node -> data);
+                q.pop();
+                if(node -> left)q.push(node -> left);
+                if(node -> right)q.push(node -> right);
+            }
+            if(can_sort)
+            {
+                // cout<<"prev "<<prev<<endl;
+                // for(auto &it : v)cout<<it<<" "; cout<<endl;
+                reverse(v.begin() + prev, v.end());
+                // for(auto &it : v)cout<<it<<" "; cout<<endl;
+            }
+            can_sort = !can_sort;
+        }
+        return v;
+    }
+};
