@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool ValidCorner(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        vector<pair<int, int>> vp;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == 1) {
+                    vp.push_back({i, j});
+                }
+            }
+        }
+        unordered_set<string> st;
+        for (int i = 0; i < vp.size(); i++) {
+            for (int j = i + 1; j < vp.size(); j++) {
+                if (vp[i].first != vp[j].first && vp[i].second != vp[j].second) {
+                    string s = to_string(min(vp[i].first, vp[j].first)) + "," + to_string(max(vp[i].first, vp[j].first)) + "," + to_string(min(vp[i].second, vp[j].second)) + "," + to_string(max(vp[i].second, vp[j].second));
+                    if (st.find(s) != st.end()) {
+                        return true;
+                    }
+                    st.insert(s);
+                }
+            }
+        }
+        return false;
+
+        
+    }
+};
