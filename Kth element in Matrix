@@ -1,0 +1,37 @@
+class Solution {
+  public:
+    int kthSmallest(vector<vector<int>> &matrix, int k) {
+        // code here
+        int n=matrix.size();
+        if (n == 0 || k <= 0) {
+    // handle error or return a specific value
+    return -1;
+}
+
+        vector<int>s;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<matrix[0].size(); j++){
+                s.push_back(matrix[i][j]);
+            }
+        }
+        if (k > s.size()) {
+    // handle error or return a specific value
+    return -1;
+}
+sort(s.begin(),s.end());
+
+        int i=1;
+        int res=0;
+        for(auto&m:s){
+            if(i==k){
+                res=m;
+                break;
+            }
+            else{
+               i++;
+            }
+        }
+        return res;
+    }
+};
+
