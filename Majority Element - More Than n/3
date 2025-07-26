@@ -1,0 +1,22 @@
+class Solution {h
+  public:
+    vector<int> findMajority(vector<int>& arr) {
+        // Code here
+        int n = arr.size();
+        int targetCount = n/3;
+        vector<int> result;
+        unordered_map<int, int> freq;
+        for(auto i:arr){
+            freq[i]++;
+        }
+        for(auto& i:freq){
+            if(i.second > targetCount){
+                result.push_back(i.first);
+            }
+        }
+        sort(result.begin(), result.end());
+        
+        return result;
+    }
+};
+
