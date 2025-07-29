@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> asciirange(string& s) {
+        vector<vector<int>> v(26, vector<int>(2, -1));//O(26) means constant space 
+        vector<int> store;//O(1)space as i want return a vector
+        for (int i = 0; i < s.length(); i++) { 
+            if (v[s[i] - 'a'][0] == -1)
+                v[s[i] - 'a'][0] = i;
+            else
+                v[s[i] - 'a'][1] = i;
+        }
+        for (int i = 0; i < 26; i++) {
+            int sum = 0;
+            int first_occure = v[i][0];
+            int last_occure = v[i][1];
+            if (first_occure != -1 && last_occure != -1) {
+                for(int j=first_occure+1; j<last_occure;j++)sum+=(int)s[j];
+                if(sum !=0)store.push_back(sum);
+            }
+        }
+        //here total TC=O(26*n); as n=10^5
+        return store;
+    }
+}; 
