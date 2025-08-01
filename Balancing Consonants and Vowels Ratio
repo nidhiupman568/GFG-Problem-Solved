@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    int countBalanced(vector<string>& arr) {
+        // code here
+        vector<int>sample;
+        unordered_map<int,int>omap;
+        for(int i=0;i<arr.size();i++) {
+            string temp=arr[i];
+            int cntV=0;
+            int cntC=0;
+            for(int j=0;j<temp.length();j++) {
+                if(temp.at(j)=='a'||temp.at(j)=='o'||temp.at(j)=='e'||temp.at(j)=='i'||temp.at(j)=='u') {
+                    cntV++;
+                } else {
+                    cntC++;
+                }
+            }
+            sample.push_back(cntV-cntC);
+        }
+        int count =0 ;
+        int total=0;
+        omap[0]=1;
+        for(int i=0;i<sample.size();i++) {
+            total+=sample[i];
+            if(omap.find(total)!=omap.end()) {
+                count+=omap[total];
+            }
+            omap[total]++;
+        }
+        
+        return count;
+    }
+};
