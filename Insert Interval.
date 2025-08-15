@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    vector<vector<int>> insertInterval(vector<vector<int>> &intervals,
+                                       vector<int> &newInterval) {
+        // code here
+        intervals.push_back(newInterval);
+        sort(intervals.begin(), intervals.end());
+        vector<vector<int>> mergedintervals;
+        mergedintervals.push_back({intervals[0][0],intervals[0][1]});
+        int n = intervals.size();
+        for(int i = 1;i<n;i++)
+        {
+            int s = mergedintervals.back()[0];
+            int e = mergedintervals.back()[1];
+            mergedintervals.pop_back();
+            int cs = intervals[i][0];
+            int ce = intervals[i][1];
+            
+            if(e>=cs)
+            {
+                mergedintervals.push_back({min(s,cs),max(e,ce)});
+            }
+            else
+            {
+                mergedintervals.push_back({s,e});
+                mergedintervals.push_back({cs,ce});
+            }
+        }
+        return mergedintervals;
+    }
+};
