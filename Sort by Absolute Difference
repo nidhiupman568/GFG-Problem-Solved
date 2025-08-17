@@ -1,0 +1,13 @@
+class Solution {
+  public:
+    void rearrange(vector<int> &arr, int x) {
+        // code here
+        stable_sort(arr.begin(), arr.end(), [x](int a, int b) {
+            int d1 = abs(a - x);
+            int d2 = abs(b - x);
+
+            return d1 < d2; // ties handled by stable_sort
+        });
+        return;
+    }
+};
