@@ -1,0 +1,45 @@
+class Solution {
+  public:
+    bool searchMatrix(vector<vector<int>> &mat, int key) {
+        int n = mat.size() , m = mat[0].size() ; 
+        int low = 0 , high = n * m - 1 ; 
+        while(low <= high){
+            int mid = (low + high) / 2 ; 
+            // left side idx's 
+            int li = low / m ; 
+            int lj = low % m ; 
+            // right side idx's 
+            int ri = high / m ; 
+            int rj = high % m ; 
+            // mid side idx's
+            int mi = mid / m ; 
+            int mj = mid % m; 
+            
+            // if left part is sorted 
+            if(mat[mi][mj] == key){
+                return true ; 
+            }
+            else if(mat[li][lj] <= mat[mi][mj]){
+                //key is in the range 
+                if(mat[li][lj] <= key && mat[mi][mj] >= key){
+                    // eliminate right subpart 
+                    high = mid - 1; 
+                }else{
+                    // sorted but key doesnt exist in this range 
+                    // eliminate left subpart
+                    low = mid + 1 ; 
+                }
+            }else{
+                // right part is sorted 
+                if(mat[ri][rj] >= key && mat[mi][mj] <= key){
+                    // valid range 
+                    low = mid + 1 ; 
+                }else{
+                    // key doesnt exist here 
+                    high = mid - 1; 
+                }
+            }
+        }
+        return false ;
+    }
+};
