@@ -1,0 +1,18 @@
+class Solution {
+  public:
+    int assignHole(vector<int>& mices, vector<int>& holes) {
+        int n = mices.size();
+        
+        // Step 1: Sort both arrays
+        sort(mices.begin(), mices.end());
+        sort(holes.begin(), holes.end());
+        
+        // Step 2: Find max difference
+        int maxTime = 0;
+        for (int i = 0; i < n; i++) {
+            maxTime = max(maxTime, abs(mices[i] - holes[i]));
+        }
+        
+        return maxTime;
+    }
+};
