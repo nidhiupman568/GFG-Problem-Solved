@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    int maxWater(vector<int> &arr) {
+        // code here int ans
+      int n=arr.size();
+      int total=0;
+      int leftsum[n],rightsum[n];
+      leftsum[0]=arr[0];
+      rightsum[n-1]=arr[n-1];
+      for(int i=1;i<n;i++)
+      {
+          leftsum[i]=max(leftsum[i-1],arr[i]);
+      }
+         for(int i=n-2;i>=0;i--)
+      {
+         rightsum[i]=max(rightsum[i+1],arr[i]);
+      }
+      for(int i=0;i<n;i++)
+      {
+          if(leftsum[i]>arr[i]&&rightsum[i]>arr[i])
+          {
+              total+=min(leftsum[i],rightsum[i])-arr[i];
+          }
+      }
+      return total;
+    }
+};
+
