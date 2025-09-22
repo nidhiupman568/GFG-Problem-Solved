@@ -1,0 +1,66 @@
+class Solution {
+public:
+    // Function to find Next Smaller Element (NSE) for every index
+    // For each element arr[i], it returns the index of the nearest smaller element to its right
+    // If no such element exists, assign n (out of bounds)
+    vector<int> nse(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> num(n, n);   // default: no smaller on right → n
+        stack<int> st;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.empty() && arr[st.top()] >= arr[i]) {
+                st.pop();  // pop all greater/equal elements
+            }
+            if (!st.empty()) num[i] = st.top(); // nearest smaller to right
+            st.push(i);
+        }
+        return num;
+    }
+
+    // Function to find Previous Smaller Element (PSE) for every index
+    // For each element arr[i], it returns the index of the nearest smaller element to its left
+    // If no such element exists, assign -1 (out of bounds)
+    vector<int> psee(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> num(n, -1);  // default: no smaller on left → -1
+        stack<int> st;
+        
+        for (int i = 0; i < n; i++) {
+            while (!st.empty() && arr[st.top()] >= arr[i]) {
+                st.pop();  // pop all greater/equal elements
+            }
+            if (!st.empty()) num[i] = st.top(); // nearest smaller to left
+            st.push(i);
+        }
+        return num;
+    }
+
+    // Main function: Maximum of minimums for every window size
+    vector<int> maxOfMins(vector<int>& arr) {
+        int n = arr.size();
+
+        // Step 1: Find prev smaller and next smaller for all elements
+        vector<int> prev = psee(arr);
+        vector<int> next = nse(arr);
+
+        // Answer array, ans[k-1] = maximum of minimums for window size k
+        vector<int> ans(n, 0);
+
+        // Step 2: For each element arr[i], calculate the window length
+        // in which arr[i] is the minimum element
+        for (int i = 0; i < n; i++) {
+            int len = next[i] - prev[i] - 1;   // valid window length
+            ans[len - 1] = max(ans[len - 1], arr[i]); // store best value for this length
+        }
+
+        // Step 3: Some window sizes may remain unfilled
+        // Propagate maximums from right to left
+        // (if we know answer for size k+1, it’s also valid for size k)
+        for (int i = n - 2; i >= 0; i--) {
+            ans[i] = max(ans[i], ans[i + 1]);
+        }
+
+        return ans;
+    }
+};
