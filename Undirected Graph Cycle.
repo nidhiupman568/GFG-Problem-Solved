@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    bool dfsCycle(vector<bool> &vis,int src,int par ,unordered_map<int,vector<int>>&mp){
+        vis[src]=true;
+        for(int neigh:mp[src]){
+            if(par==neigh)//going to same parent route is avoided
+            continue;
+            if(vis[neigh])//if it is visited and same parenet is avoided then sureshot it is cycle
+            return true;
+            if(!vis[neigh]){
+                if(dfsCycle(vis,neigh,src,mp))
+                return true;
+            }
+            
+        }
+        return false;
+    }
+    bool isCycle(int V, vector<vector<int>>& edges) {
+        unordered_map<int,vector<int>> mp;
+        for(vector<int> vec:edges ){
+            int v=vec[0];
+            int u=vec[1];
+            mp[u].push_back(v);
+            mp[v].push_back(u);
+        }
+        vector<bool> vis(V,false);
+       for(int i=0;i<V;i++){
+           if(!vis[i] && dfsCycle(vis,i,-1,mp))
+           return true;
+       }
+       return false;
+    }
+};
