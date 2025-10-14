@@ -1,0 +1,27 @@
+class Solution {
+  public:
+  
+    int kthNodeFromEnd(Node *head, int& k) {
+        if(head && !head->next) {
+            if(!--k)
+                return head->data;
+            return -1;
+        }
+        
+        int num = kthNodeFromEnd(head->next, k);
+        
+        if(--k == 0) {
+            return head->data;
+        }
+        return num;
+    }
+    
+    int getKthFromLast(Node* head, int k) {
+        // code here
+        if(!k || !head)
+            return -1;
+        
+        return kthNodeFromEnd(head, k);
+        
+    }
+};
