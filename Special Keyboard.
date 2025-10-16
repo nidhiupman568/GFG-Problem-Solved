@@ -1,0 +1,41 @@
+class Solution{
+public:
+   long long int optimalKeys(int N){
+   
+       if(N<=6) return N;
+       
+       vector<int> dp(N+1);
+       
+       dp[0]=0;
+       dp[1]=1;
+       dp[2]=2;
+       dp[3]=3;
+       dp[4]=4;
+       dp[5]=5;
+       dp[6]=6;
+       
+       // A == Select all 
+       // C == Copy 
+       // V == Paste
+       
+       // lets take example of 10
+       
+       // we can take - 7 uniq + 3 for A C V        -> dp[7]*(3-1) = 9*2 = 18
+       //               6 uniq + 4 for A C V V      -> dp[6]*(4-1) = 6*3 = 18
+       //               5 uniq + 5 for A C V V V    -> dp[5]*(5-1) = 5*4 = 20
+       
+       // store the max of above in dp and store it to use further 
+       
+       
+       for(int i=7;i<=N;i++){
+           for(int uniq=i-3;uniq>=1;uniq--){
+               int curr = dp[uniq]*(i-uniq-1);
+               if(curr > dp[i]){
+                   dp[i] = curr;
+               }
+           }
+       }
+       
+       return dp[N];
+   }
+};
