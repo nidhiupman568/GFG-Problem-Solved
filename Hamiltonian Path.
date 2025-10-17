@@ -1,0 +1,46 @@
+class Solution
+{
+    public:
+    bool dfs(int i, int N, vector<vector<int>> adj, vector<bool> &vis, int &c){
+        vis[i] = 1;
+        c++;
+        if(c==N)
+            return 1;
+        
+        for(auto x : adj[i]){
+            if(!vis[x]){
+                if(dfs(x, N, adj, vis, c))
+                        return 1;
+            }
+        }
+        
+        vis[i] = 0;
+        c--;
+        return 0;
+        
+    }
+    
+    
+    bool check(int N,int M,vector<vector<int>> Edges)
+    {
+        // code here
+        vector<vector<int>> adj(N);
+        for(int i=0;i<M;i++){
+            int u = Edges[i][0]-1;
+            int v = Edges[i][1]-1;
+            
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+            
+        }
+        
+        vector<bool> vis(N, 0);
+        int c = 0;
+        for(int i=0;i<N;i++){
+            if(dfs(i, N, adj, vis, c))
+                return 1;
+        }
+        
+        return 0;
+    }
+};
