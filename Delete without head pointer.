@@ -1,0 +1,19 @@
+class Solution {
+  public:
+    // Function to delete a node without any reference to the head pointer.
+    void deleteNode(Node* del) {
+        // Your code here
+        Node * slow=del;
+        Node * fast=del;
+        fast=fast->next;
+        while(fast->next!=NULL){
+            slow->data=fast->data;
+            fast=fast->next;
+            slow=slow->next;
+        }
+         slow->data=fast->data;
+         slow->next=NULL;
+         delete(fast);
+        return;
+    }
+};
