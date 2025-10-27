@@ -1,0 +1,24 @@
+class Solution {
+  public:
+    vector<vector<int>> kSmallestPair(vector<int> &arr1, vector<int> &arr2, int k) {
+        int n = arr1.size();
+        int m = arr2.size();
+        
+        priority_queue<pair<int, pair<int, int>>> pq;
+        
+        for(int i=0; i<min(n, k); i++) {
+            for(int j=0; j<min(m, k); j++) {
+                pq.push({-(arr1[i]+arr2[j]), {arr1[i], arr2[j]}});
+            }
+        }
+        
+        vector<vector<int>> ans;        
+        
+        while(!pq.empty() && ans.size() < k) {
+            ans.push_back({pq.top().second.first, pq.top().second.second});
+            pq.pop();
+        }
+        
+        return ans;
+    }
+};
