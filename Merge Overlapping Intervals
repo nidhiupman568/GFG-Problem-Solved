@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    vector<vector<int>> mergeOverlap(vector<vector<int>>& arr) {
+        // Code here
+        int n = arr.size();
+        
+        sort(arr.begin(),arr.end());
+        
+        vector<vector<int>>ans;
+        
+       for( auto it:arr){
+           if(ans.empty() || ans.back()[1]<it[0]){
+               ans.push_back(it);
+           }
+           
+           else{
+               ans.back()[1]=max(it[1],ans.back()[1]);
+           }
+       }
+       return ans;
+    }
+};
