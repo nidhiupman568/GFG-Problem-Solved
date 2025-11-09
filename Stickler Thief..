@@ -1,0 +1,22 @@
+class Solution {
+  public:
+//TABULATION
+    int solve(int idx,vector<int>&arr,vector<int>&dp){
+     dp[0]=arr[0];
+    dp[1]=max(arr[0],arr[1]);
+     for(int i=2;i<idx;i++){
+         int pick=arr[i]+dp[i-2];
+         int notpick=0+dp[i-1];
+         dp[i]=max(pick,notpick);
+         
+     }
+        return dp[idx-1];
+    }
+    
+    int findMaxSum(vector<int>& arr) {
+    int n=arr.size();
+    vector<int>dp(n,-1);
+    return solve(n,arr,dp);
+    
+    }
+};
