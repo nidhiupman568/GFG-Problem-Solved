@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    map<pair<int, int>, int> mp;
+    
+    virtual int fun(int i, int j, vector<int> &cuts){
+      if((j-i) < 2)
+        return 0;
+      
+      if(mp.find({i, j}) != mp.end())
+        return mp[{i, j}];
+      
+      int ans = INT_MAX;
+      
+      for(int k=i+1; k<j; k++){
+        int cs = cuts[j] - cuts[i];
+        
+        int tCost = cs + fun(i, k, cuts) + fun(k, j, cuts);
+        
+        ans = min(ans, tCost);
+        
+      }    
+      
+      return mp[{i, j}] = ans;      
+    }
+    
+    
+    virtual int minCutCost(int n, vector<int>& cuts) {
+      cuts.push_back(0);
+      cuts.push_back(n);
+      
+      sort(cuts.begin(), cuts.end());
+      
+      return fun(0, cuts.size()-1, cuts);
+    }
+};
+
