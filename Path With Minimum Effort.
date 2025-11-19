@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int minCostPath(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+
+        vector<vector<int>> dist(n, vector<int>(m, INT_MAX));
+        priority_queue<
+            pair<int, pair<int,int>>,
+            vector<pair<int, pair<int,int>>>,
+            greater<pair<int, pair<int,int>>>
+        > pq;
+
+        dist[0][0] = 0;
+        pq.push({0, {0, 0}});
+
+        int dirs[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+
+        while (!pq.empty()) {
+            auto [cost, pos] = pq.top();
+            pq.pop();
+
+            int x = pos.first;
+            int y = pos.second;
+
+            if (x == n - 1 && y == m - 1)
+                return cost;  // minimal cost found
+
+            if (cost > dist[x][y])
+                continue;
+
+            for (auto& d : dirs) {
+                int nx = x + d[0];
+                int ny = y + d[1];
+
+                if (nx >= 0 && ny >= 0 && nx < n && ny < m) {
+                    int edge = abs(mat[nx][ny] - mat[x][y]);
+                    int newCost = max(cost, edge);
+
+                    if (newCost < dist[nx][ny]) {
+                        dist[nx][ny] = newCost;
+                        pq.push({newCost, {nx, ny}});
+                    }
+                }
+            }
+        }
+
+        return -1; // should never happen
+    }
+};
+
