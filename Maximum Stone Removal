@@ -1,0 +1,33 @@
+class Solution {
+  public:
+     
+    void dfs( int currNode ,vector<vector<int>>& stone , vector<bool>&vis ){
+            
+            vis[currNode]=true;
+            
+            // visiting all teh node who'r in same row  OR same col
+            // same row or same column → connected
+            for(int next = 0; next<stone.size()  ; next++){
+                if(stone[next][0] == stone[currNode][0] || stone[next][1] == stone[currNode][1] ){
+                    if(!vis[next]) 
+                         dfs(next,stone,vis);
+                }
+            }
+        
+    } 
+    int maxRemove(vector<vector<int>>& stones) {
+        // Code here
+       int n =stones.size();
+       vector<bool>vis(n,false);
+       
+       int Conenctedcomponent=0;
+       for(int i=0; i<n ;i++){
+           if(!vis[i]){
+               dfs(i,stones,vis);
+               Conenctedcomponent++;
+           }
+       }
+        return n - Conenctedcomponent;
+        
+    }
+};
