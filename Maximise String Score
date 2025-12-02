@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int maxScore(string &s, vector<vector<char>> &jumps) {
+        int n = s.size();
+        if (n <= 1) return 0;
+
+        // adjacency + reachable list
+        vector<vector<int>> to(26);
+        bool adj[26][26] = {0};
+        for (int i = 0; i < 26; i++) adj[i][i] = 1;
+        for (auto &e : jumps) adj[e[0]-'a'][e[1]-'a'] = 1;
+        for (int i = 0; i < 26; i++)
+            for (int j = 0; j < 26; j++)
+                if (adj[i][j]) to[i].push_back(j);
+
+        // prefix sums of ascii and count of each letter
+        vector<int> pref(n);
+        vector<array<int,26>> cnt(n);
+        pref[0] = s[0];
+        cnt[0].fill(0);
+        cnt[0][s[0]-'a'] = 1;
+
+        for (int i = 1; i < n; i++) {
+            pref[i] = pref[i-1] + s[i];
+            cnt[i] = cnt[i-1];
+            cnt[i][s[i]-'a']++;
+        }
+
+        // dp + next index tracker
+        vector<int> dp(n+1, 0);
+        int nxt[26]; fill(nxt, nxt+26, -1);
+
+        for (int i = n-1; i >= 0; i--) {
+            int cur = s[i]-'a', best = 0;
+            for (int j : to[cur]) {
+                int x = nxt[j];
+                if (x == -1) continue;
+
+                int sum = pref[x] - (i ? pref[i-1] : 0);
+                int freq = cnt[x][j] - (i ? cnt[i-1][j] : 0);
+                best = max(best, sum - freq * int('a'+j) + dp[x]);
+            }
+            dp[i] = best;
+            nxt[cur] = i;
+        }
+        return dp[0];
+    }
+};
