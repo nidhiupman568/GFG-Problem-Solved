@@ -1,0 +1,54 @@
+class Solution {
+  public:
+    int orangesRot(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        
+        queue<pair<int,int>> q;
+        for(int i = 0;i<n;i++){
+            for(int j = 0;j<m;j++){
+                if(mat[i][j] == 2)q.push({i, j});
+            }
+        }
+        
+        int _time = 0;
+        while(true){
+            int size = q.size();
+            while(size--){
+                pair<int,int> pp = q.front();
+                q.pop();
+                
+                int x = pp.first;
+                int y = pp.second;
+                
+                mat[x][y] = 2;
+                
+                if(x-1>=0 and mat[x-1][y] == 1){
+                    q.push({x-1, y});
+                    mat[x-1][y] = 2;
+                }
+                if(y-1>=0 and mat[x][y-1] == 1){
+                    q.push({x, y-1});
+                    mat[x][y-1] = 2;
+                }
+                if(x+1<n and mat[x+1][y] == 1){
+                    q.push({x+1, y});
+                    mat[x+1][y] = 2;
+                }
+                if(y+1<m and mat[x][y+1] == 1){
+                    q.push({x, y+1});
+                    mat[x][y+1] = 2;
+                }
+                
+            }
+            if(q.empty())break;
+            _time++;
+        }
+        for(int i = 0;i<n;i++){
+            for(int j = 0;j<m;j++){
+                if(mat[i][j] == 1)return -1;
+            }
+        }
+        return _time;
+    }
+};
