@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    Node* reverse(Node* &node){
+        Node* prev=NULL,*curr=node;
+        while(curr){
+            Node* temp=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=temp;
+        }
+        return prev;
+    }
+    bool isPalindrome(Node *head) {
+        //  code here
+        Node* slow=head,*fast=head;
+        while(fast->next && fast->next->next) slow=slow->next,
+        fast=fast->next->next;
+        Node* head2=slow->next;
+        slow->next=nullptr;
+        Node* rh2=reverse(head2);
+        Node* temp1=head,*temp2=rh2;
+        while(temp1 && temp2){
+            if(temp1->data!=temp2->data) return false;
+            temp1=temp1->next;temp2=temp2->next;
+        }
+        return true;
+    }
+};
