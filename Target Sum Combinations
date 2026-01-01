@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    void f(int ind, vector<int>& arr, int n, vector<vector<int>>& res, vector<int>& res1, int target) {
+        if (target == 0) {
+            res.push_back(res1);
+            return;
+        }
+        if (ind >= n) return;
+
+        for (int i = ind; i < n; i++) {
+            if (arr[i] > target) break; // pruning, since arr is sorted
+
+            res1.push_back(arr[i]);
+            f(i, arr, n, res, res1, target - arr[i]); // ✅ use i, not ind
+            res1.pop_back();
+        }
+    }
+
+    vector<vector<int>> targetSumComb(vector<int> &arr, int target) {
+        sort(arr.begin(), arr.end());
+        int n = arr.size();
+        vector<vector<int>> res;
+        vector<int> res1;
+        f(0, arr, n, res, res1, target);
+        return res;
+    }
+};
