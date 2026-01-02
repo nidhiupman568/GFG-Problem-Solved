@@ -1,0 +1,34 @@
+class Solution {
+  public:
+    // Function to find the largest number after k swaps.
+    
+    void recur(string &input,int counter,int idx,string &maxi) {
+        if(input>maxi) 
+        {
+            maxi=input;
+        }
+        if(counter==0 || idx==input.length()-1) {
+            return;
+        }
+        
+        for(int i=idx+1;i<input.length();i++) {
+            if(input[i]>input[idx]) {
+                char temp = input.at(i);
+                input.at(i)=input.at(idx);
+                input.at(idx)=temp;
+                recur(input,counter-1,idx+1,maxi);
+                input.at(idx)=input.at(i);
+                input.at(i)=temp;
+            }
+        }
+        recur(input,counter,idx+1,maxi);
+    }
+    
+    string findMaximumNum(string& s, int k) {
+        // code here.
+        string maxi="0";
+        
+        recur(s,k,0,maxi);
+        return maxi;
+    }
+};
