@@ -1,0 +1,44 @@
+class Solution {
+  public:
+    vector<int> nextFreqGreater(vector<int>& arr) {
+        // code here
+        int i,j,n,k;
+        unordered_map<int,int> mp;
+        stack<pair<int,int>> s;
+        vector<int> ans;
+        n=arr.size();
+        ans.resize(n);
+        for(i=0;i<n;i++)
+        {
+            mp[arr[i]]++;
+        }
+        ans[n-1]=-1;
+        s.push(make_pair(mp[arr[n-1]],arr[n-1]));
+        for(i=n-2;i>=0;i--)
+        {
+            if(mp[arr[i]]<s.top().first)
+            {   ans[i]=s.top().second;
+                s.push(make_pair(mp[arr[i]],arr[i]));
+                continue;
+            }
+            else
+            {
+                while((!s.empty())&&s.top().first<=mp[arr[i]])
+                {
+                    s.pop();
+                }
+                if(s.empty())
+                {
+                    ans[i]=-1;
+                }
+                else
+                {
+                    ans[i]=s.top().second;
+                }
+                s.push(make_pair(mp[arr[i]],arr[i]));
+            }
+        }
+        return ans;
+        
+    }
+};
