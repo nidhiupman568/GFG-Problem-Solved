@@ -1,0 +1,23 @@
+class Solution {
+  public:
+    int longestPalinSubseq(string &s) {
+        // code here
+        int n = s.size();
+        vector<int> dp(n + 1, 0);
+        string r = s;
+        reverse(r.begin(), r.end());
+        int prev, curr;
+        for(int i = 1; i <= n; i++) {
+            prev = curr = 0;
+            for(int j = 1; j <= n; j++) {
+                prev = curr;
+                curr = dp[j];
+                if(s[i - 1] == r[j - 1])
+                    dp[j] = 1 + prev;
+                else 
+                    dp[j] = max(dp[j], dp[j - 1]);
+            }
+        }
+        return dp[n];
+    }
+};
