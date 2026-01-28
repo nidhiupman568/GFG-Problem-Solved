@@ -1,0 +1,15 @@
+class Solution {
+public:
+    long long int optimalKeys(int N) {
+        vector<long long> dp(N + 1, 0);
+        for (int i = 1; i <= N; ++i) {
+            dp[i] = dp[i - 1] + 1;
+
+            for (int j = 1; j <= i - 3; ++j) {
+                long long curr = dp[j] * (i - j - 1);
+                dp[i] = max(dp[i], curr);
+            }
+        }
+        return dp[N];
+    }
+};
