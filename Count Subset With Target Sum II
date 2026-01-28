@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    int helper(vector<int> &arr, int k,int sum,int idx,vector<vector<int>>& dp){
+        if(idx==arr.size()) return (sum==k);
+        
+        
+        if(dp[idx][sum]!=-1) return dp[idx][sum];
+        
+        
+        int take=0;
+        if(sum + arr[idx] <= k){
+            take=helper(arr,k,sum+arr[idx],idx+1,dp);
+        }
+        
+        int notTake=helper(arr,k,sum,idx+1,dp);
+        
+        return dp[idx][sum]=take+notTake;
+    }
+    int countSubset(vector<int> &arr, int k) {
+        int totalSum = 0;
+        for (int x : arr) totalSum += x;
+        if (k > totalSum) return 0;
+        
+        int n=arr.size();
+        vector<vector<int>> dp(n,vector<int>(k+1,-1));
+        return helper(arr,k,0,0,dp);
+        
+    }
+};
