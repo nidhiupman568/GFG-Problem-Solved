@@ -1,0 +1,16 @@
+class Solution {
+  public:
+    virtual int findMinDiff(vector<int>& a, int m) {
+      sort(a.begin(), a.end());
+      
+      int i=0, j=m-1;
+      int n=a.size();
+      int ans=INT_MAX;
+      
+      while(j<n){
+        ans=min(ans, a[j]-a[i]); j++; i++;    
+      }
+      
+      return ans;
+    }
+};
