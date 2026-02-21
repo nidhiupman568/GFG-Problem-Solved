@@ -1,0 +1,28 @@
+class Solution {
+public:
+    unordered_map<string, long long> dp;
+
+    long long recur(int n, int selectedLength, int length) {
+        if (n == 0) return length;
+
+        string key = to_string(n) + "," + to_string(selectedLength) + "," + to_string(length);
+        if (dp.count(key)) return dp[key];
+
+        long long addOne = recur(n - 1, selectedLength, length + 1);
+        long long paste = 0;
+        if (selectedLength > 0) {
+            paste = recur(n - 1, selectedLength, length + selectedLength);
+        }
+        long long copy = 0;
+        if (n >= 2) {
+            copy = recur(n - 2, length, length); // Ctrl-A + Ctrl-C
+        }
+
+        return dp[key] = max({addOne, paste, copy});
+    }
+
+    long long int optimalKeys(int N) {
+        dp.clear();
+        return recur(N, 0, 0);
+    }
+};
