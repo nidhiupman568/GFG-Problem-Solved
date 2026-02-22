@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    int minJumps(vector<int>& arr) {
+        // code here
+        int maxReach = 0, currIndex = 0, jumps = 0, sizeOfArr = arr.size();
+        for (int i=0; i<sizeOfArr; i++) {
+            if (i > maxReach) {
+                return -1;
+            }
+            maxReach = std::max(maxReach, i+arr[i]);
+            if (i == currIndex) {
+                currIndex = maxReach;
+                jumps++;
+                if (currIndex >= sizeOfArr-1) {
+                    return jumps;
+                }
+            }
+        }
+        
+        return jumps;
+    }
+};
