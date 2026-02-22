@@ -1,0 +1,17 @@
+#define ll long long
+class Solution {
+  public:
+    long subarrayXor(vector<int> &arr, int k) {
+        // code here
+        ll n = arr.size(), ans = 0;
+        map<ll, ll> mp;
+        mp[0] = 1;
+        ll pref = 0;
+        for (ll i = 0; i < n; i++){
+            pref = pref^arr[i];
+            if (mp.count(pref^k)) ans += mp[pref^k]; // a^b == c <=> c^b == a
+            mp[pref]++;
+        }
+        return ans;
+    }
+};
