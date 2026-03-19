@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    Node * pred = NULL, *suc = NULL;
+    void solve(Node * root, int k)
+    {
+        if(!root)
+        return;
+        
+        if((root->data < k) && (!pred || pred->data<root->data))
+        pred = root;
+        if((root->data > k) && (!suc || suc->data>root->data))
+        suc = root;
+        
+        solve(root->left, k);
+        solve(root->right, k);
+    }
+    vector<Node*> findPreSuc(Node* root, int key) {
+        solve(root, key);
+        return {pred,suc};
+    }
+};
