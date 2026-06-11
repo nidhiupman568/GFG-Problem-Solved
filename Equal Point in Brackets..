@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    int findIndex(string &s) {
+        // code here
+        int count_close = 0;
+        
+        for(char ch : s) {
+            if(ch == ')') count_close++;
+        }
+        
+        int count_open = 0;
+        int i = 0;
+        while(count_open != count_close) {
+            if(s[i] == '(') count_open++;
+            else count_close--;
+            i++;
+        }
+        
+        return i;
+    }
+};
