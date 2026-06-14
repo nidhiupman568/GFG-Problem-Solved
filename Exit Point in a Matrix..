@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    vector<int> exitPoint(vector<vector<int>>& mat) {
+        // code here
+        int i = 0 , j = 0;
+        int n = mat.size() , m = mat[0].size();
+        //Direction 0: Right 1: Down 2: left 3: Up
+        int dir = 0;
+        while(i >= 0 && i < n && j >= 0 && j < m) {
+            if(mat[i][j] == 1) {
+                mat[i][j] = 0;
+                dir = (dir + 1) % 4;
+            }
+            
+            if(dir == 0) j++;
+            else if(dir == 1) i++;
+            else if(dir == 2) j--;
+            else i--;
+        }
+        if(i < 0) i = 0;
+        if(j < 0) j = 0;
+        if(i >= n) i = n-1;
+        if(j >= m) j = m-1;
+        return {i,j};
+    }
+};
