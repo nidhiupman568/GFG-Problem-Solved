@@ -1,0 +1,30 @@
+
+Hardik Agarwal
+12 hours agoJun 15, 2026 00:29 (GMT +5:30)
+
+C++ Soln using DP + RECURSION
+
+class Solution {
+public:
+    vector<int> dp;
+    int solve(vector<int>& cost, int w) {
+        if (dp[w] != -1)
+            return dp[w];
+
+        int res = INT_MAX;
+        for (int i = 0; i < w && i < cost.size(); i++)
+            if (cost[i] != -1) {
+                int val = solve(cost, w - i - 1);
+                if (val != INT_MAX)
+                    val += cost[i];
+                res = min(res, val);
+            }
+        return dp[w] = res;
+    }
+    int minimumCost(vector<int>& cost, int w) {
+        dp = vector<int>(w + 1, -1);
+        dp[0] = 0;
+        int val = solve(cost, w);
+        return val == INT_MAX ? -1 : val;
+    }
+};
