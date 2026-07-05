@@ -1,0 +1,23 @@
+class Solution {
+  public:
+    int maxCharGap(string &s) {
+        // code here
+        unordered_map<char,int> hash;
+        int n=s.size();
+        for(int i=0;i<n;i++){
+            hash[s[i]]=i;
+        }
+        int flag=0;
+        int maxi=INT_MIN;
+        for(int j=0;j<n;j++){
+            if(j!=hash[s[j]]){
+                flag=1;
+                maxi=max(maxi,hash[s[j]]-j-1);
+            }
+        }
+        if(flag==0){
+            return -1;
+        }
+        return maxi;
+    }
+};
