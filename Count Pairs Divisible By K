@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    int countKdivPairs(vector<int>& arr, int k) {
+        // code here
+        unordered_map<int,int>m;
+        for(int i = 0; i < arr.size(); i++){
+            m[arr[i] % k]++;
+        }
+        int count = 0;
+        for(int i=1; i <= k/2; i++){
+            count += m[k-i]*m[i];
+        }
+        if(m[0] > 1){
+            count += (m[0] * (m[0]-1))/2;
+        }
+        if(k % 2 == 0){
+            count -= (m[k/2] * (m[k/2] + 1))/2;
+        }
+        return count;
+    }
+};
