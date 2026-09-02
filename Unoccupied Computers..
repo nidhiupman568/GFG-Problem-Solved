@@ -1,0 +1,35 @@
+class Solution {
+  public:
+    int solve(int n, string s) {
+        // code here
+        int a[26] = {0};
+        int t = s.length();
+        int c = 0;
+        for(int i=0;i<n;i++)
+        a[i] = 0;
+        int d = 0;
+        for(int i=0;i<t;i++)
+        {
+            int x = s[i] - 'A';
+            if(a[x] == 0)
+            {
+                if(c < n)
+                {
+                    a[x] = 1;
+                    c++;
+                }
+                else
+                {
+                    d++;
+                    a[x] = -1;
+                }
+            }
+            else if(a[x] == 1)
+            {
+                c--;
+                a[x] = 0;
+            }
+        }
+        return d;
+    }
+};
